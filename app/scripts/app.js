@@ -48,6 +48,11 @@ angular
       "name": "Town of Wendell Fire Department",
       "title": "Wendell",
       "icon": "images/wendellfire6.jpg"
+    },
+    "rolesville": {
+      "name": "Town of Rolesville Fire Department",
+      "title": "Rolesville",
+      "icon": "images/WakeNewHopePatch.png"
     }
   })
   .config(function ($routeProvider) {
