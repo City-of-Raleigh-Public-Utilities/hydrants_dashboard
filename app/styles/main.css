@@ -7,8 +7,12 @@
 
 body {
   padding: 0;
+  /*background: #fff url('../images/')*/
 }
 
+.navbar {
+  /*background: #86d3ff*/
+}
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,

@@ -9,7 +9,7 @@
  * Main module of the application.
  */
 angular
-  .module('hydrantsDashboardApp', [
+  .module('hydrantsDashboard', [
     'ngAnimate',
     'ngCookies',
     'ngResource',

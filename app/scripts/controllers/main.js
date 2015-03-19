@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the hydrantsDashboardApp
  */
-angular.module('hydrantsDashboardApp')
+angular.module('hydrantsDashboard')
   .controller('MainCtrl', function ($scope) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
