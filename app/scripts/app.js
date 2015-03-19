@@ -17,6 +17,24 @@ angular
     'ngSanitize',
     'ngTouch'
   ])
+  .constant("FireDepartments", {
+    "raleigh": {
+      "name": "City of Raleigh Fire Department",
+      "icon": "images/Raleigh_Fire_Department_Logo.png"
+    },
+    "garner": {
+      "name": "Town of Garner Fire Department",
+      "icon": "images/garner_fire_logo.png"
+    },
+    "wakeforest": {
+      "name": "Town of Wake Forest Fire Department",
+      "icon": "images/wakeforest_logo.jpg"
+    },
+    "zebulon": {
+      "name": "Town of Zebulon Fire Department",
+      "icon": "images/zebulon_logo.png"
+    }
+  })
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
