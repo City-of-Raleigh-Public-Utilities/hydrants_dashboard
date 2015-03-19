@@ -37,7 +37,17 @@ angular
     "zebulon": {
       "name": "Town of Zebulon Fire Department",
       "title": "Zebulon",
-      "icon": "images/zebulon_logo.png"
+      "icon": "images/zeb_seal.png"
+    },
+    "kightdale": {
+      "name": "Town of Kightdale Fire Department",
+      "title": "Kightdale",
+      "icon": "images/kdaleseal.png"
+    },
+    "wendell": {
+      "name": "Town of Wendell Fire Department",
+      "title": "Wendell",
+      "icon": "images/wendellfire6.jpg"
     }
   })
   .config(function ($routeProvider) {
@@ -49,6 +59,10 @@ angular
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
+      })
+      .when('/responseZone/:zone', {
+        templateUrl: 'views/responsezone.html',
+        controller: 'ResponsezoneCtrl'
       })
       .otherwise({
         redirectTo: '/'
