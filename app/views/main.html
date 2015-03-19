@@ -7,25 +7,18 @@
     </a>
   </div>
   <div class="media-body">
-    <h2 class="media-heading main-heading">Hydrants Inspections Dashboard</h2>
+    <h2 class="media-heading main-heading">Hydrant Inspection Dashboard</h2>
     <p><a class="btn btn-lg btn-success" ng-href="#/">Select a Response Zone</a></p>
     <small>Ensuring Safety One Hydrant at a Time</small>
   </div>
 </div>
-<!-- <div class="main-inline">
-  <h1>Hydrants Inspections Dashboard</h1>
-  <p class="lead">
-    <img src="images/firehydrant-assets/Layer 1.png" alt="Hydrant"><br>
-    Ensuring Safety One Hydrant at a Time
-  </p>
-</div> -->
 
 </div>
 
 <div class="container marketing animated fadeInRight">
   <!-- Three columns of text below the carousel -->
   <div class="row">
-    <div class="col-lg-4" ng-repeat="dept in departments">
+    <div class="col-lg-4" ng-repeat="dept in departments | orderBy: '+title'">
       <img class="img-rounded" ng-src="{{dept.icon}}" alt="Department Badge" width="140" height="140">
       <h2>{{dept.title}}</h2>
       <p>{{dept.name}}</p>

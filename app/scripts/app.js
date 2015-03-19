@@ -18,43 +18,53 @@ angular
     'ngTouch',
     'agsserver'
   ])
-  .constant("FIREDEPTS", {
-    "raleigh": {
+  .constant("FIREDEPTS", [
+     {
       "name": "City of Raleigh Fire Department",
       "title": "Raleigh",
       "icon": "images/Raleigh_Fire_Department_Logo.png"
     },
-    "garner": {
+    {
       "name": "Town of Garner Fire Department",
       "title": "Garner",
       "icon": "images/garner_fire_logo.jpg"
     },
-    "wakeforest": {
+     {
       "name": "Town of Wake Forest Fire Department",
       "title": "Wake Forest",
       "icon": "images/wakeforest_logo.jpg"
     },
-    "zebulon": {
+     {
       "name": "Town of Zebulon Fire Department",
       "title": "Zebulon",
       "icon": "images/zeb_seal.png"
     },
-    "kightdale": {
-      "name": "Town of Kightdale Fire Department",
-      "title": "Kightdale",
+    {
+      "name": "Town of Knightdale Fire Department",
+      "title": "Knightdale",
       "icon": "images/kdaleseal.png"
     },
-    "wendell": {
+    {
       "name": "Town of Wendell Fire Department",
       "title": "Wendell",
       "icon": "images/wendellfire6.jpg"
     },
-    "rolesville": {
+    {
       "name": "Town of Rolesville Fire Department",
       "title": "Rolesville",
+      "icon": ""
+    },
+    {
+      "name": "Wake New Hope",
+      "title": "Wake New Hope",
       "icon": "images/WakeNewHopePatch.png"
+    },
+     {
+      "name": "Eastern Wake Fire Department",
+      "title": "Eastern Wake",
+      "icon": ""
     }
-  })
+  ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
