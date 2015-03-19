@@ -1,23 +1,34 @@
-<div class="jumbotron">
+<div class="jumbotron animated fadeInLeft">
+  <div class="media">
+  <div class="media-left media-middle">
+    <a href="#">
+      <img class="media-object" src="images/firehydrant-assets/scaled-at-50/Layer 1.png" alt="Hydrant">
+    </a>
+  </div>
+  <div class="media-body">
+    <h2 class="media-heading main-heading">Hydrants Inspections Dashboard</h2>
+    <p><a class="btn btn-lg btn-success" ng-href="#/">Select a Response Zone</a></p>
+    <small>Ensuring Safety One Hydrant at a Time</small>
+  </div>
+</div>
+<!-- <div class="main-inline">
   <h1>Hydrants Inspections Dashboard</h1>
   <p class="lead">
-    <img src="images/firehydrant-assets/Layer 1.png" alt="I'm Yeoman"><br>
-    Ensuring Safety, One Hydrant at a Time
+    <img src="images/firehydrant-assets/Layer 1.png" alt="Hydrant"><br>
+    Ensuring Safety One Hydrant at a Time
   </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/">Select a Response Zone</a></p>
+</div> -->
+
 </div>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
-
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
+<div class="container marketing animated fadeInRight">
+  <!-- Three columns of text below the carousel -->
+  <div class="row">
+    <div class="col-lg-4" ng-repeat="dept in departments">
+      <img class="img-rounded" ng-src="{{dept.icon}}" alt="Department Badge" width="140" height="140">
+      <h2>{{dept.title}}</h2>
+      <p>{{dept.name}}</p>
+      <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
+    </div><!-- /.col-lg-4 -->
+  </div><!-- /.row -->
 </div>

@@ -17,21 +17,25 @@ angular
     'ngSanitize',
     'ngTouch'
   ])
-  .constant("FireDepartments", {
+  .constant("FIREDEPTS", {
     "raleigh": {
       "name": "City of Raleigh Fire Department",
+      "title": "Raleigh",
       "icon": "images/Raleigh_Fire_Department_Logo.png"
     },
     "garner": {
       "name": "Town of Garner Fire Department",
-      "icon": "images/garner_fire_logo.png"
+      "title": "Garner",
+      "icon": "images/garner_fire_logo.jpg"
     },
     "wakeforest": {
       "name": "Town of Wake Forest Fire Department",
+      "title": "Wake Forest",
       "icon": "images/wakeforest_logo.jpg"
     },
     "zebulon": {
       "name": "Town of Zebulon Fire Department",
+      "title": "Zebulon",
       "icon": "images/zebulon_logo.png"
     }
   })

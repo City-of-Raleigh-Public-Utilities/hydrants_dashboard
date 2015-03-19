@@ -10,6 +10,9 @@ body {
   /*background: #fff url('../images/')*/
 }
 
+.main-heading {
+  margin-bottom: 50px;
+}
 .navbar {
   /*background: #86d3ff*/
 }
