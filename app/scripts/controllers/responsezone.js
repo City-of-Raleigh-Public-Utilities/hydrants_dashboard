@@ -55,11 +55,11 @@ angular.module('hydrantsDashboard')
           };
 
           var unionOptions = {
-            method: 'POST',
+            method: 'GET',
             url: 'http://mapstest.raleighnc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer/union',
             headers: {'Content-Type': 'text/plain'},
-            params: {
-                f: 'json',
+            data: {
+                f: 'html',
                 geometries: {
                   geometryType: 'esriGeometryPolygon',
                   geometries: []
@@ -68,14 +68,14 @@ angular.module('hydrantsDashboard')
               }
               }
 
-              unionOptions.params.geometries.geometries.push(districts[0].geometry);
+              unionOptions.data.geometries.geometries.push(districts[0].geometry);
           districts.forEach(function(district){
             // bounds.rings = district.geometry.rings;
             // console.log(district.geometry.rings);
             // unionOptions.params.geometries.geometries.push(district.geometry);
           });
 
-          var url = 'http://mapstest.raleighnc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer/union'
+          var url = 'http://maps.raleighnc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer/union'
           $http(unionOptions)
           // agsFactory.mapstest.utilsGeom('union', unionOptions)
             .then(function(res){
