@@ -33,6 +33,10 @@ module.exports = function(config) {
       'bower_components/leaflet/dist/leaflet.js',
       'bower_components/leaflet/dist/leaflet-src.js',
       'bower_components/angular-leaflet/dist/angular-leaflet-directive.js',
+      'bower_components/turf/turf.min.js',
+      'bower_components/terraformer/terraformer.min.js',
+      'bower_components/terraformer-arcgis-parser/terraformer-arcgis-parser.min.js',
+      'bower_components/esri-leaflet/dist/esri-leaflet.js',
       // endbower
       'app/scripts/**/*.js',
       'test/mock/**/*.js',

@@ -1,11 +1,24 @@
 <div class="row">
-  <div class="col-xs-12 col-sm-6 col-md-8">
-    <h1>{{$routeParams.zone}}</h1>
-    <p>This is the responseZone view.</p>
+  <div class="col-xs-12 col-sm-6 col-md-7 animated zoomIn">
+    <!-- <img class="img-rounded"  >
+    <h1>{{$routeParams.zone}}</h1> -->
+
+    <div class="media">
+    <div class="media-left media-middle">
+      <a href="#">
+        <img class="media-object" style="height: 150px; width: 150px;" ng-src="{{badge}}" alt="badge">
+      </a>
+    </div>
+    <div class="media-body media-middle">
+      <h2 class="media-heading main-heading">{{$routeParams.zone}}</h2>
+    </div>
   </div>
-  <div class="col-xs-6 col-md-4">
+
+
+  </div>
+  <div class="col-xs-6 col-md-5 animated zoomIn">
     <p>This is the responseZone view.</p>
-    <leaflet width="640px" height="480px"></leaflet>
+    <leaflet geojson="geojson" width="100%" height="480px"></leaflet>
   </div>
 
 <!-- {{$route}}

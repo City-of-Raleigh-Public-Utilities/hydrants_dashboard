@@ -8,7 +8,8 @@
  * Controller of the hydrantsDashboardApp
  */
 angular.module('hydrantsDashboard')
-  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'agsFactory', '$http', function ($scope, $route, $routeParams, $location, agsFactory, $http) {
+  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData',
+    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData) {
 
     //Get Route Details
     //  $scope.$route = $route;
@@ -17,84 +18,106 @@ angular.module('hydrantsDashboard')
 
      $scope.responseZone = $routeParams.zone;
 
+     FIREDEPTS.forEach(function(dept){
+       if (dept.title === $scope.responseZone){
+         $scope.badge = dept.icon;
+       }
+     });
+
      //Set options for query
      var options = {
        serviceArea: {
         layer: 'County Fire Response Districts',
+        geojson: true,
         actions: 'query',
         params: {
           f: 'json',
-          text: $scope.responseZone
+          text: $scope.responseZone,
+          outSR: 4326
         }
       },
       hydrants: {
         layer: 'Water Hydrants',
-        geojosn: true,
+        geojson: true,
         actions: 'query',
         params: {
           f: 'json',
-          geometryType: 'esriGeometryPolygon'
+          geometryType: 'esriGeometryPolygon',
+          inSR: 4326,
+          outSR: 4326,
+          spatialRel: 'esriSpatialRelContains'
         }
       }
     };
 
-
+      var mapBounds =  new L.FeatureGroup();
+      $scope.serviceAreas;
 
       agsFactory.publicSafteyMS.request(options.serviceArea)
         .then(function(res){
-          var districts = res.features;
+          console.log(res);
+
+          $scope.serviceAreas = turf.combine(res);
+          var enveloped = turf.envelope($scope.serviceAreas);
+          var districts = Terraformer.ArcGIS.convert(enveloped.geometry);
+          console.log(enveloped);
+
+
+          //Empties exisiting feature group
+          mapBounds.clearLayers();
+
+
+        leafletData.getMap().then(function(map) {
+          //Sets geojson object and adds each layer to featureGroup as a layer, so it can be edited
+          L.geoJson(res, {
+            style: {
+                fillColor: "green",
+                weight: 2,
+                opacity: 1,
+                color: 'white',
+                dashArray: '3',
+                fillOpacity: 0.7
+            },
+            onEachFeature: function (feature, layer) {
+              mapBounds.addLayer(layer);
+            }
+          }).addTo(map);
+          //Get bounds from geojson and fits to map
+          map.fitBounds(mapBounds.getBounds());
+      });
 
           return districts;
         }, function(err){
           console.log('Error: Cannot retrieve response zones');
         })
         .then(function(districts){
-          console.log(districts)
-          var bounds = {
-            'spatialReference': {wkid : 2264}
-          };
 
-          var unionOptions = {
-            method: 'GET',
-            url: 'http://mapstest.raleighnc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer/union',
-            headers: {'Content-Type': 'text/plain'},
-            data: {
-                f: 'html',
-                geometries: {
-                  geometryType: 'esriGeometryPolygon',
-                  geometries: []
-                },
-                sr: 2264
-              }
-              }
-
-              unionOptions.data.geometries.geometries.push(districts[0].geometry);
-          districts.forEach(function(district){
-            // bounds.rings = district.geometry.rings;
-            // console.log(district.geometry.rings);
-            // unionOptions.params.geometries.geometries.push(district.geometry);
-          });
-
-          var url = 'http://maps.raleighnc.gov/arcgis/rest/services/Utilities/Geometry/GeometryServer/union'
-          $http(unionOptions)
-          // agsFactory.mapstest.utilsGeom('union', unionOptions)
-            .then(function(res){
-              console.log(res);
-            },
-            function(err){
-              console.log('Error: Preforming Union');
-            })
-
-
-          // console.log(test);
-          // console.log(test[0]);
           //Set bounds for query
-          options.hydrants.params.geometry = bounds;
+          options.hydrants.params.geometry = districts;
 
-          //Make request to hydrants
+          // Make request to hydrants
           agsFactory.publicUtilMS.request(options.hydrants)
             .then(function(res){
-              console.log(res);
+
+              console.log($scope.serviceAreas);
+              var fc = turf.featurecollection($scope.serviceAreas);
+              function addPoints(point, poly, callback){
+
+                callback(turf.within(point, poly));
+              }
+
+
+              addPoints(res, fc, function(data){
+                console.log(data);
+
+              })
+
+              angular.extend($scope, {
+                geojson: {
+                    data: res
+                }
+            });
+
 
             }, function(err){
               console.log('Error: Cannot retrieve hydrants');
