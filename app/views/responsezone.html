@@ -63,3 +63,24 @@
 {{$location}} -->
 
 </div>
+<div class="row">
+  <div class="col-md-12 animated zoomIn">
+    <table class="totalsReport table table-hover">
+      <thead>
+        <tr>
+          <th>Hydrant Totals for Project</th>
+        </tr>
+        <tr>
+          <th>Key</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="(key, value) in reportTotals.total">
+          <td>{{key}}</td>
+          <td>{{value}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

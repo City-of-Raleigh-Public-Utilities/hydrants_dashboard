@@ -91,5 +91,9 @@ body {
 
 .totalsReport{
   display: block;
-  margin: 15px 10px;
+  margin: 15px 5px;
+}
+
+#map {
+  margin: 15px 0;
 }
