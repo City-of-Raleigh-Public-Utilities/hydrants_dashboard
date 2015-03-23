@@ -20,7 +20,7 @@
       <tr>
         <th>Hydrant Totals for {{today}}</th>
       </tr>
-      <tr>
+      <tr class="table-headings">
         <th>Key</th>
         <th>Value</th>
       </tr>
@@ -39,7 +39,7 @@
       <tr>
         <th>Hydrant Totals for Project</th>
       </tr>
-      <tr>
+      <tr class="table-headings">
         <th>Key</th>
         <th>Value</th>
       </tr>
@@ -65,15 +65,15 @@
 </div>
 <div class="row">
   <div class="col-md-12 animated zoomIn">
-    <table class="totalsReport table table-hover">
+    <table class="repairList table table-hover">
       <thead>
         <tr>
-          <th>Repair Lists:</th>
-          <th>
-            <select ng-options="repair.name for repair in needsRepair" ng-model="selected"></select>
+          <th colspan="2">
+            Repair Lists: <select ng-options="repair.name for repair in needsRepair" ng-model="selected"></select>
           </th>
+          <th colspan="3">Search: <input ng-model="searchText"></th>
         </tr>
-        <tr>
+        <tr class="table-headings">
           <th>Raleigh ID</th>
           <th>Jurisid</th>
           <th>Address</th>
@@ -92,10 +92,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="feature in selected.data">
+        <tr ng-repeat="feature in selected.data | filter:searchText">
           <td>{{feature.FACILITYID}}</td>
           <td>{{feature.JURISID || 'N/A'}}</td>
-          <td>{{feature.STNUM}} {{feature.properties.STNAME}} {{feature.properties.STTYPE}}</td>
+          <td>{{feature.STNUM}} {{feature.STNAME}} {{feature.STTYPE}}</td>
           <td ng-if="feature.OWNEDBY">Private</td>
           <td ng-if="!feature.OWNEDBY">Public</td>
           <td>{{feature.MANUFACTURER || 'N/A'}}</td>
