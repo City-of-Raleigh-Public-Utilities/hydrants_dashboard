@@ -8,8 +8,8 @@
  * Controller of the hydrantsDashboardApp
  */
 angular.module('hydrantsDashboard')
-  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData',
-    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData) {
+  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval',
+    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval) {
 
     //Get Route Details
     //  $scope.$route = $route;
@@ -23,6 +23,11 @@ angular.module('hydrantsDashboard')
          $scope.badge = dept.icon;
        }
      });
+
+     //Set current date
+     $interval(function(){
+       $scope.today = $filter('date')(new Date(), 'short');
+     }, 1000);
 
      //Set options for query
      var options = {
