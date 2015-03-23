@@ -35,9 +35,10 @@ angular.module('hydrantsDashboard')
         Need_Repair_Private: 0,
         New_Hydrant_Public: 0,
         New_Hydrant_Private: 0
-      }
+      },
+      needsRepairPublic: [],
+      needsRepairPrivate: []
     };
-
 
     var Stats = {
 
@@ -57,38 +58,46 @@ angular.module('hydrantsDashboard')
           Need_Repair_Private: 0,
           New_Hydrant_Public: 0,
           New_Hydrant_Private: 0
-        }
+        },
+        needsRepairPublic: [],
+        needsRepairPrivate: []
       },
 
-      getTotalsReport: function (feature){
+      getReport: function (features, callback){
+        var that = this;
         //reset stats
         angular.extend(this.report, cleanReport);
-        
-        var prop = feature.properties;
-        if (feature.properties.EDITEDON > today){
-          prop.CHECKED === 'Y' ? this.report.daily.Checked++ : 0;
-          prop.OPERABLE === 'N' ? this.report.daily.Inoperable++ : 0;
-          prop.REPAIRNEED === '1' ? this.report.daily.Need_Repair++ : 0;
-          prop.CREATEDON >= today.getTime() ? this.report.daily.New_Hydrants++ : 0;
-        }
+        features.forEach(function(feature){
 
-        //Total Checked
-        prop.CHECKED === 'Y' && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? this.report.total.Checked_Public++ : 0;
-        prop.CHECKED === 'Y' && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? this.report.total.Checked_Private++ : 0;
+          var prop = feature.properties;
+          if (feature.properties.EDITEDON > today){
+            prop.CHECKED === 'Y' ? that.report.daily.Checked++ : 0;
+            prop.OPERABLE === 'N' ? that.report.daily.Inoperable++ : 0;
+            prop.REPAIRNEED === '1' ? that.report.daily.Need_Repair++ : 0;
+            prop.CREATEDON >= today.getTime() ? that.report.daily.New_Hydrants++ : 0;
+          }
 
-        //Total Inoperable
-        prop.OPERABLE === 'N' && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? this.report.total.Inoperable_Public++ : 0;
-        prop.OPERABLE === 'N' && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? this.report.total.Inoperable_Private++ : 0;
+          //Total Checked
+          prop.CHECKED === 'Y' && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? that.report.total.Checked_Public++ : 0;
+          prop.CHECKED === 'Y' && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? that.report.total.Checked_Private++ : 0;
 
-        //Total Needs Repair
-        prop.REPAIRNEED === 1 && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? this.report.total.Need_Repair_Public++ : 0;
-        prop.REPAIRNEED === 1 && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? this.report.total.Need_Repair_Private++ : 0;
+          //Total Inoperable
+          prop.OPERABLE === 'N' && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? that.report.total.Inoperable_Public++ : 0;
+          prop.OPERABLE === 'N' && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? that.report.total.Inoperable_Private++ : 0;
 
-        //Total New Hydrants
-        prop.CREATEDON >= startDate.getTime() && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? this.report.total.New_Hydrant_Public++ : 0;
-        prop.CREATEDON >= startDate.getTime() && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? this.report.total.New_Hydrant_Private++ : 0;
+          //Total Needs Repair
+          prop.REPAIRNEED === 1 && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? (that.report.total.Need_Repair_Public++, that.report.needsRepairPublic.push(prop)) : 0;
+          prop.REPAIRNEED === 1 && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? (that.report.total.Need_Repair_Private++, that.report.needsRepairPrivate.push(prop))  : 0;
 
+          //Total New Hydrants
+          prop.CREATEDON >= startDate.getTime() && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? that.report.total.New_Hydrant_Public++ : 0;
+          prop.CREATEDON >= startDate.getTime() && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? that.report.total.New_Hydrant_Private++ : 0;
+
+        });
+
+        callback(this.report);
       }
+
 
     };
 

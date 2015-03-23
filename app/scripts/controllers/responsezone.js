@@ -144,11 +144,28 @@ angular.module('hydrantsDashboard')
                     },
                     style: setHydrantStyle,
                     onEachFeature: function (feature, layer){
-                      hydrantStats.getTotalsReport(feature);
+                      // hydrantStats.setTotalsReport(feature);
                     }
                 }
             });
-            $scope.reportTotals = hydrantStats.report;
+            hydrantStats.getReport(res.features, function(report){
+              $scope.reportTotals = report;
+              $scope.needsRepair = [
+                {
+                  status: true,
+                  data: report.needsRepairPublic,
+                  name: 'Needs Repair Public'
+                },
+                {
+                  status: false,
+                  data: report.needsRepairPrivate,
+                  name: 'Needs Repair Private'
+                }
+              ];
+              $scope.selected = $scope.needsRepair[0];
+              console.log(report);
+            });
+
 
             }, function(err){
               console.log('Error: Cannot retrieve hydrants');
@@ -158,6 +175,8 @@ angular.module('hydrantsDashboard')
           console.log('Error: Cannot retrieve districts');
         });
 
+        $scope.$watch('reportTotals', function(){});
+        $scope.$watch('needsRepair', function(){});
 
 
   }]);

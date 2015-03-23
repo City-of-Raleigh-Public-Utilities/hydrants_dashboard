@@ -68,17 +68,49 @@
     <table class="totalsReport table table-hover">
       <thead>
         <tr>
-          <th>Hydrant Totals for Project</th>
+          <th>Repair Lists:</th>
+          <th>
+            <select ng-options="repair.name for repair in needsRepair" ng-model="selected"></select>
+          </th>
         </tr>
         <tr>
-          <th>Key</th>
-          <th>Value</th>
+          <th>Raleigh ID</th>
+          <th>Jurisid</th>
+          <th>Address</th>
+          <th>Ownership</th>
+          <th>Manufacturer</th>
+          <th>Year</th>
+          <th>Valve Diameter</th>
+          <th>Pumper Nozzel</th>
+          <th>Side Nozzel</th>
+          <th>Operable</th>
+          <th>Needs Repair</th>
+          <th>Notes</th>
+          <th>RFD_Notes</th>
+          <th>Checked</th>
+          <th>Station</th>
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="(key, value) in reportTotals.total">
-          <td>{{key}}</td>
-          <td>{{value}}</td>
+        <tr ng-repeat="feature in selected.data">
+          <td>{{feature.FACILITYID}}</td>
+          <td>{{feature.JURISID || 'N/A'}}</td>
+          <td>{{feature.STNUM}} {{feature.properties.STNAME}} {{feature.properties.STTYPE}}</td>
+          <td ng-if="feature.OWNEDBY">Private</td>
+          <td ng-if="!feature.OWNEDBY">Public</td>
+          <td>{{feature.MANUFACTURER || 'N/A'}}</td>
+          <td>{{feature.HYDRANTYEAR || 'N/A'}}</td>
+          <td>{{feature.VALVESIZE || 'N/A'}}</td>
+          <td>{{feature.PUMPERNOZZLETYPE || 'N/A'}}</td>
+          <td>{{feature.SIDENOZZLETYPE || 'N/A'}}</td>
+          <td ng-if="feature.OPERABLE === 'Y'">{{'YES' || 'N/A'}}</td>
+          <td ng-if="feature.OPERABLE === 'N'">{{'No' || 'N/A'}}</td>
+          <td ng-if="feature.REPAIRNEED">{{'True' || 'N/A'}}</td>
+          <td ng-if="!feature.REPAIRNEED">{{'False' || 'N/A'}}</td>
+          <td>{{feature.NOTES || 'N/A'}}</td>
+          <td>{{feature.RFD_NOTES || 'N/A'}}</td>
+          <td>{{feature.CHECKED || 'N/A'}}</td>
+          <td>{{feature.RFD_STATION || 'N/A'}}</td>
         </tr>
       </tbody>
     </table>

@@ -95,5 +95,6 @@ body {
 }
 
 #map {
-  margin: 15px 0;
+  margin: 150px 0;
+  padding-top: 50px;
 }
