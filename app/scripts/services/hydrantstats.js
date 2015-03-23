@@ -42,13 +42,13 @@ angular.module('hydrantsDashboard')
       getTotalsReport: function (feature){
         var prop = feature.properties;
         if (feature.properties.EDITEDON > today){
-          if (prop.CHECKED === 'Y'){
-            this.report.daily.Checked++;
-          }
+          prop.CHECKED === 'Y' ? this.report.daily.Checked++ : 0;
+          prop.OPERABLE === 'N' ? this.report.daily.Inoperable++ : 0;
+          prop.REPAIRNEED === '1' ? this.report.daily.Need_Repair++ : 0;
+          prop.CREATEDON >= today ? this.report.daily.New_Hydrants++ : 0;
         }
-        else{
-          console.log('Not Today');
-        }
+        
+
       }
 
     };
