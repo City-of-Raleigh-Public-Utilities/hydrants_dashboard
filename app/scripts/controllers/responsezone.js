@@ -43,6 +43,7 @@ angular.module('hydrantsDashboard')
         params: {
           f: 'json',
           geometryType: 'esriGeometryPolygon',
+          outFields: 'STNUM, STENUM,STPREFIX, STNAME, STTYPE, STSUFFIX, OWNEDBY, MANUFACTURER, HYDRANTYEAR, VALVESIZE, PUMPERNOZZLETYPE, SIDENOZZLETYPE, OPERABLE, REPAIRNEED, NOTES, RFD_NOTES, FACILITYID, CHECKED, JURISID, RFDSTATION',
           inSR: 4326,
           outSR: 4326,
           spatialRel: 'esriSpatialRelContains'
@@ -112,9 +113,31 @@ angular.module('hydrantsDashboard')
 
               })
 
+
+              var geojsonMarkerOptions = {
+                radius: 4,
+                fillColor: "#ff7800",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8
+            };
+
+            function setHydrantStyle (feature){
+              switch (feature.properties.REPAIRNEED) {
+                case 0: return {fillColor: "#0008ff"};
+                case 1: return {fillColor: "#ff0000"};
+              }
+            }
+
+              console.log(res);
               angular.extend($scope, {
                 geojson: {
-                    data: res
+                    data: res,
+                    pointToLayer: function (feature, latlng) {
+                      return L.circleMarker(latlng, geojsonMarkerOptions);
+                    },
+                    style: setHydrantStyle
                 }
             });
 

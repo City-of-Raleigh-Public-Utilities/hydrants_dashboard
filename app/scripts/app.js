@@ -83,6 +83,5 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-      // $httpProvider.defaults.headers.common.Accept+=',text/html,application/xhtml+xml,application/xml';
-      console.log($httpProvider.defaults.headers.common);
+    
   });
