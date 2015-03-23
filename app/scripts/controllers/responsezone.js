@@ -135,6 +135,26 @@ angular.module('hydrantsDashboard')
               }
             }
 
+            $scope.$on("leafletDirectiveMap.geojsonMouseover", function(ev, feature, leafletEvent) {
+                hydrantMouseover(feature, leafletEvent);
+            });
+
+            // Mouse over function, called from the Leaflet Map Events
+            function hydrantMouseover(feature, leafletEvent) {
+                var layer = leafletEvent.target;
+                layer.setStyle({
+                  radius: 6,
+                  fillColor: "#00ffe6",
+                  color: "#000",
+                  weight: 1,
+                  opacity: 1,
+                  fillOpacity: 0.8
+                });
+                layer.bringToFront();
+                $scope.selectedCountry = feature;
+                console.log(feature);
+            }
+
               console.log(res);
               angular.extend($scope, {
                 geojson: {
@@ -143,9 +163,7 @@ angular.module('hydrantsDashboard')
                       return L.circleMarker(latlng, geojsonMarkerOptions);
                     },
                     style: setHydrantStyle,
-                    onEachFeature: function (feature, layer){
-                      // hydrantStats.setTotalsReport(feature);
-                    }
+                    resetStyleOnMouseout: true
                 }
             });
             hydrantStats.getReport(res.features, function(report){
