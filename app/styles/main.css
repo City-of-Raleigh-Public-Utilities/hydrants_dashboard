@@ -88,3 +88,8 @@ body {
     border-bottom: 0;
   }
 }
+
+.totalsReport{
+  display: block;
+  margin: 15px 10px;
+}

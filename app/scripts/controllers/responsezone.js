@@ -8,8 +8,8 @@
  * Controller of the hydrantsDashboardApp
  */
 angular.module('hydrantsDashboard')
-  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval',
-    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval) {
+  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval', 'hydrantStats',
+    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval, hydrantStats) {
 
     //Get Route Details
     //  $scope.$route = $route;
@@ -48,7 +48,7 @@ angular.module('hydrantsDashboard')
         params: {
           f: 'json',
           geometryType: 'esriGeometryPolygon',
-          outFields: 'STNUM, STENUM,STPREFIX, STNAME, STTYPE, STSUFFIX, OWNEDBY, MANUFACTURER, HYDRANTYEAR, VALVESIZE, PUMPERNOZZLETYPE, SIDENOZZLETYPE, OPERABLE, REPAIRNEED, NOTES, RFD_NOTES, FACILITYID, CHECKED, JURISID, RFDSTATION',
+          outFields: 'STNUM, STENUM,STPREFIX, STNAME, STTYPE, STSUFFIX, OWNEDBY, MANUFACTURER, HYDRANTYEAR, VALVESIZE, PUMPERNOZZLETYPE, SIDENOZZLETYPE, OPERABLE, REPAIRNEED, NOTES, RFD_NOTES, FACILITYID, CHECKED, JURISID, RFDSTATION, EDITEDON',
           inSR: 4326,
           outSR: 4326,
           spatialRel: 'esriSpatialRelContains'
@@ -142,10 +142,13 @@ angular.module('hydrantsDashboard')
                     pointToLayer: function (feature, latlng) {
                       return L.circleMarker(latlng, geojsonMarkerOptions);
                     },
-                    style: setHydrantStyle
+                    style: setHydrantStyle,
+                    onEachFeature: function (feature, layer){
+                      hydrantStats.getTotalsReport(feature);
+                    }
                 }
             });
-
+            $scope.reportTotals = hydrantStats.report;
 
             }, function(err){
               console.log('Error: Cannot retrieve hydrants');
