@@ -162,7 +162,6 @@ angular.module('hydrantsDashboard')
               // hydrantStats.addDomains(res.features, function(features){
               //   res.features = features
               // });
-              console.log($scope.serviceAreas);
               angular.copy(res, $scope.hydrantRef);
 
           //Add hydrants to map
@@ -193,6 +192,18 @@ angular.module('hydrantsDashboard')
                 }
               ];
               $scope.selected = $scope.needsRepair[0];
+
+              $scope.headers = Object.keys($scope.needsRepair[0].data[0].attributes);
+
+              //Prepares data to print
+              $scope.printCSV = function(data){
+                var csv = [];
+                data.forEach(function(feature){
+                  csv.push(feature.attributes);
+                });
+                return csv;
+              };
+
             });
 
 

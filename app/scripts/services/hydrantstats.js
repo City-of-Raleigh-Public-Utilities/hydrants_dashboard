@@ -119,13 +119,13 @@ angular.module('hydrantsDashboard')
                   prop = 'Other';
                 }
                 break;
-              case 'EDITEDON' | 'CREATEDON':
+              case 'EDITEDON' || 'CREATEDON':
                 prop = $filter('date')(prop, 'short');
                 break;
               case 'OPERABLE':
                 prop === 'Y' ? prop = 'Yes' : prop = 'No';
                 break;
-              case 'REPAIRNEED' | 'FLOWED':
+              case 'REPAIRNEED' || 'FLOWED':
                 prop = prop ? 'True' : 'False';
                 break;
               default:

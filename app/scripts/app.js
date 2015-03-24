@@ -18,7 +18,8 @@ angular
     'ngTouch',
     'agsserver',
     'leaflet-directive',
-    'cgBusy'
+    'cgBusy',
+    'ngCsv'
   ])
   .constant("FIREDEPTS", [
      {
