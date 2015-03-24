@@ -119,7 +119,7 @@ angular.module('hydrantsDashboard')
               addPoints(res, fc, function(data){
                 console.log(data);
 
-              })
+              });
 
 
             //Sets hydrant styles
