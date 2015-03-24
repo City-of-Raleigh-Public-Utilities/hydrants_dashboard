@@ -24,6 +24,9 @@ angular.module('hydrantsDashboard')
        }
      });
 
+     //Placeholder for hydrant selection
+     $scope.selectedHydrant = {};
+
      //Set current date
      $interval(function(){
        $scope.today = $filter('date')(new Date(), 'short');
@@ -135,17 +138,39 @@ angular.module('hydrantsDashboard')
               }
             }
 
-            $scope.$on("leafletDirectiveMap.geojsonMouseover", function(ev, feature, leafletEvent) {
-                hydrantMouseover(feature, leafletEvent);
-            });
 
-            $scope.$on("leafletDirectiveMap.geojsonClick", function(ev, featureSelected, leafletEvent) {
-              var coords = [featureSelected.geometry.coordinates[1], featureSelected.geometry.coordinates[0]]
-              leafletData.getMap().then(function(map) {
-                map.setView(coords, 18);
+
+            leafletData.getMap().then(function(map) {
+              $scope.$on("leafletDirectiveMap.geojsonMouseover", function(ev, feature, leafletEvent) {
+                  hydrantMouseover(feature, leafletEvent);
               });
-            });
 
+              $scope.$on("leafletDirectiveMap.geojsonClick", function(ev, featureSelected, leafletEvent) {
+                var coords = [featureSelected.geometry.coordinates[1], featureSelected.geometry.coordinates[0]]
+
+                  map.setView(coords, 18);
+
+              });
+
+              //Controls hover events on needs repairs table
+              $scope.zoomToFeature = function(feature){
+                if ($scope.selectedHydrant.properties){
+                  $scope.selectedHydrant.properties = feature.attributes;
+                }
+                else{
+                  $scope.selectedHydrant = {};
+                  $scope.selectedHydrant.properties = feature.attributes;
+                }
+
+                map.setView([feature.geom.coordinates[1], feature.geom.coordinates[0]], 18);
+              };
+
+              //Controls search bar above map
+              $scope.searchMap = function($event){
+                console.log($event);
+              };
+
+             });
 
             // Mouse over function, called from the Leaflet Map Events
             function hydrantMouseover(feature, leafletEvent) {

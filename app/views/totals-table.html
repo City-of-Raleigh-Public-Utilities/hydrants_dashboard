@@ -1,4 +1,4 @@
-<table class="totalsReport table table-hover">
+<table ng-hide="view" class="totalsReport table table-hover">
   <thead>
     <tr>
       <th>{{defaultTitle}} {{title}}</th>
@@ -9,6 +9,27 @@
     </tr>
   </thead>
   <tbody>
+    <tr ng-repeat="(key, value) in data">
+      <td>{{key}}</td>
+      <td>{{value}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<table ng-show="view" class="totalsReport table table-hover">
+  <thead>
+    <tr>
+      <th>{{defaultTitle}} {{title}}</th>
+    </tr>
+    <tr class="table-headings">
+      <th>Key</th>
+      <th>Value</th>
+    </tr>
+  </thead>
+</table>
+
+<table ng-show="view" class="totalsReport table table-hover">
+  <tbody class="scroll-tbody">
     <tr ng-repeat="(key, value) in data">
       <td>{{key}}</td>
       <td>{{value}}</td>

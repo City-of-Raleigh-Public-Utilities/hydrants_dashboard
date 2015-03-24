@@ -86,8 +86,8 @@ angular.module('hydrantsDashboard')
           prop.OPERABLE === 'N' && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? that.report.total.Inoperable_Private++ : 0;
 
           //Total Needs Repair
-          prop.REPAIRNEED === 1 && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? (that.report.total.Need_Repair_Public++, that.report.needsRepairPublic.push(prop)) : 0;
-          prop.REPAIRNEED === 1 && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? (that.report.total.Need_Repair_Private++, that.report.needsRepairPrivate.push(prop))  : 0;
+          prop.REPAIRNEED === 1 && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? (that.report.total.Need_Repair_Public++, that.report.needsRepairPublic.push({attributes: prop, geom: feature.geometry})) : 0;
+          prop.REPAIRNEED === 1 && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? (that.report.total.Need_Repair_Private++, that.report.needsRepairPrivate.push({attributes: prop, geom: feature.geometry}))  : 0;
 
           //Total New Hydrants
           prop.CREATEDON >= startDate.getTime() && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? that.report.total.New_Hydrant_Public++ : 0;
