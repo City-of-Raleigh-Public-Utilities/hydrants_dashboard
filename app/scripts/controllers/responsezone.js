@@ -8,8 +8,8 @@
  * Controller of the hydrantsDashboardApp
  */
 angular.module('hydrantsDashboard')
-  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval', 'hydrantStats', 'hydrantEvents',
-    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval, hydrantStats, hydrantEvents) {
+  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval', 'hydrantStats', 'hydrantEvents', '$timeout',
+    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval, hydrantStats, hydrantEvents, $timeout) {
 
     //Get Route Details
     //  $scope.$route = $route;
@@ -26,7 +26,10 @@ angular.module('hydrantsDashboard')
 
      //Placeholder for hydrant selection
      $scope.selectedHydrant = {};
-     console.log(hydrantEvents.name);
+
+     //Hydrants reference used in search
+     $scope.hydrantRef = {};
+
      //Set current date
      $interval(function(){
        $scope.today = $filter('date')(new Date(), 'short');
@@ -59,6 +62,55 @@ angular.module('hydrantsDashboard')
       }
     };
 
+    //Map Events
+    leafletData.getMap().then(function(map) {
+      $scope.$on("leafletDirectiveMap.geojsonMouseover", function(ev, feature, leafletEvent) {
+        $scope.selectedHydrant = hydrantEvents.hydrantMouseover(feature, leafletEvent);
+      });
+
+      $scope.$on("leafletDirectiveMap.geojsonClick", function(ev, featureSelected, leafletEvent) {
+          hydrantEvents.zoomToFeature(featureSelected);
+      });
+
+      //Controls hover events on needs repairs table
+      $scope.zoomToFeature = function(feature){
+        if ($scope.selectedHydrant.properties){
+          $scope.selectedHydrant.properties = feature.attributes;
+        }
+        else{
+          $scope.selectedHydrant = {};
+          $scope.selectedHydrant.properties = feature.attributes;
+        }
+
+        map.setView([feature.geom.coordinates[1], feature.geom.coordinates[0]], 18);
+      };
+
+      //Controls search bar above map
+      $scope.searchMap = function(event, textFilter, geojson){
+        //Set timeout to return promise
+        $scope.searchPromise = $timeout(function(){
+          //Filter geometry base on search text
+          geojson.data.features = $filter('filter')($scope.hydrantRef.features, {$:textFilter});
+          //Add new geojson scope
+          angular.extend($scope, {
+            geojson: {
+                data: geojson.data,
+                pointToLayer: function (feature, latlng) {
+                  return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
+                },
+                style: hydrantEvents.setHydrantStyle,
+                resetStyleOnMouseout: true
+            }
+          });
+        }, 500);
+
+
+          // map.setView([$scope.geojson.features[1], feature.geom.coordinates[0]], 18);
+        // }
+      };
+
+     });
+
       var mapBounds =  new L.FeatureGroup();
       $scope.serviceAreas;
 
@@ -80,10 +132,10 @@ angular.module('hydrantsDashboard')
           //Sets geojson object and adds each layer to featureGroup as a layer, so it can be edited
           L.geoJson(res, {
             style: {
-                fillColor: "green",
+                fillColor: 'rgba(50, 173, 2, 0.74)',
                 weight: 2,
                 opacity: 1,
-                color: 'white',
+                color: '#fff',
                 dashArray: '3',
                 fillOpacity: 0.7
             },
@@ -109,53 +161,8 @@ angular.module('hydrantsDashboard')
             .then(function(res){
 
               console.log($scope.serviceAreas);
-              var fc = turf.featurecollection($scope.serviceAreas);
-              function addPoints(point, poly, callback){
-
-                callback(turf.within(point, poly));
-              }
-
-
-              addPoints(res, fc, function(data){
-                console.log(data);
-
-              });
-
-
-            //Map Events
-            leafletData.getMap().then(function(map) {
-              $scope.$on("leafletDirectiveMap.geojsonMouseover", function(ev, feature, leafletEvent) {
-                $scope.selectedHydrant = hydrantEvents.hydrantMouseover(feature, leafletEvent);
-              });
-
-              $scope.$on("leafletDirectiveMap.geojsonClick", function(ev, featureSelected, leafletEvent) {
-                  hydrantEvents.zoomToFeature(featureSelected);
-              });
-
-              //Controls hover events on needs repairs table
-              $scope.zoomToFeature = function(feature){
-                if ($scope.selectedHydrant.properties){
-                  $scope.selectedHydrant.properties = feature.attributes;
-                }
-                else{
-                  $scope.selectedHydrant = {};
-                  $scope.selectedHydrant.properties = feature.attributes;
-                }
-
-                map.setView([feature.geom.coordinates[1], feature.geom.coordinates[0]], 18);
-              };
-
-              //Controls search bar above map
-              $scope.searchMap = function(event){
-                console.log(event);
-                if (event.keyCode === 13){
-
-                }
-              };
-
-             });
-
-          
+              angular.copy(res, $scope.hydrantRef);
+          //Add hydrants to map
               angular.extend($scope, {
                 geojson: {
                     data: res,
@@ -166,6 +173,8 @@ angular.module('hydrantsDashboard')
                     resetStyleOnMouseout: true
                 }
             });
+
+            //Generate map reports
             hydrantStats.getReport(res.features, function(report){
               $scope.reportTotals = report;
               $scope.needsRepair = [
@@ -181,7 +190,6 @@ angular.module('hydrantsDashboard')
                 }
               ];
               $scope.selected = $scope.needsRepair[0];
-              console.log(report);
             });
 
 

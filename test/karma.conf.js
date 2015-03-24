@@ -37,6 +37,7 @@ module.exports = function(config) {
       'bower_components/terraformer/terraformer.min.js',
       'bower_components/terraformer-arcgis-parser/terraformer-arcgis-parser.min.js',
       'bower_components/esri-leaflet/dist/esri-leaflet.js',
+      'bower_components/angular-busy/dist/angular-busy.js',
       // endbower
       'app/scripts/**/*.js',
       'test/mock/**/*.js',

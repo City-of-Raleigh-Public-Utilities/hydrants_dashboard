@@ -17,7 +17,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'agsserver',
-    'leaflet-directive'
+    'leaflet-directive',
+    'cgBusy'
   ])
   .constant("FIREDEPTS", [
      {
@@ -83,5 +84,5 @@ angular
       .otherwise({
         redirectTo: '/'
       });
-    
+
   });
