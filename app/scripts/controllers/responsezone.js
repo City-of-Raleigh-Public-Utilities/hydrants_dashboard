@@ -139,6 +139,14 @@ angular.module('hydrantsDashboard')
                 hydrantMouseover(feature, leafletEvent);
             });
 
+            $scope.$on("leafletDirectiveMap.geojsonClick", function(ev, featureSelected, leafletEvent) {
+              var coords = [featureSelected.geometry.coordinates[1], featureSelected.geometry.coordinates[0]]
+              leafletData.getMap().then(function(map) {
+                map.setView(coords, 18);
+              });
+            });
+
+
             // Mouse over function, called from the Leaflet Map Events
             function hydrantMouseover(feature, leafletEvent) {
                 var layer = leafletEvent.target;
