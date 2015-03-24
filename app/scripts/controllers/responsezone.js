@@ -8,8 +8,8 @@
  * Controller of the hydrantsDashboardApp
  */
 angular.module('hydrantsDashboard')
-  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval', 'hydrantStats',
-    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval, hydrantStats) {
+  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval', 'hydrantStats', 'hydrantEvents',
+    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval, hydrantStats, hydrantEvents) {
 
     //Get Route Details
     //  $scope.$route = $route;
@@ -26,7 +26,7 @@ angular.module('hydrantsDashboard')
 
      //Placeholder for hydrant selection
      $scope.selectedHydrant = {};
-
+     console.log(hydrantEvents.name);
      //Set current date
      $interval(function(){
        $scope.today = $filter('date')(new Date(), 'short');
@@ -122,40 +122,14 @@ angular.module('hydrantsDashboard')
               });
 
 
-            //Sets hydrant styles
-            function setHydrantStyle (feature){
-              switch (feature.properties.REPAIRNEED) {
-                case 0: return {
-                  fillColor: "#0008ff",
-                  color: "#000",
-                  weight: 1,
-                  opacity: 1,
-                  fillOpacity: 0.8,
-                  radius: 4
-                };
-                case 1: return {
-                    fillColor: "#ff0000",
-                    color: "#000",
-                    weight: 1,
-                    opacity: 1,
-                    fillOpacity: 0.8,
-                    radius: 4
-                  };
-                }
-            }
-
-
             //Map Events
             leafletData.getMap().then(function(map) {
               $scope.$on("leafletDirectiveMap.geojsonMouseover", function(ev, feature, leafletEvent) {
-                  hydrantMouseover(feature, leafletEvent);
+                $scope.selectedHydrant = hydrantEvents.hydrantMouseover(feature, leafletEvent);
               });
 
               $scope.$on("leafletDirectiveMap.geojsonClick", function(ev, featureSelected, leafletEvent) {
-                var coords = [featureSelected.geometry.coordinates[1], featureSelected.geometry.coordinates[0]]
-
-                  map.setView(coords, 18);
-
+                  hydrantEvents.zoomToFeature(featureSelected);
               });
 
               //Controls hover events on needs repairs table
@@ -181,30 +155,14 @@ angular.module('hydrantsDashboard')
 
              });
 
-            // Mouse over function, called from the Leaflet Map Events
-            function hydrantMouseover(feature, leafletEvent) {
-                var layer = leafletEvent.target;
-                layer.setStyle({
-                  radius: 6,
-                  fillColor: "#00ffe6",
-                  color: "#000",
-                  weight: 1,
-                  opacity: 1,
-                  fillOpacity: 0.8
-                });
-                layer.bringToFront();
-                $scope.selectedHydrant = feature;
-                console.log(feature);
-            }
-
-              console.log(res);
+          
               angular.extend($scope, {
                 geojson: {
                     data: res,
                     pointToLayer: function (feature, latlng) {
-                      return L.circleMarker(latlng, setHydrantStyle);
+                      return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
                     },
-                    style: setHydrantStyle,
+                    style: hydrantEvents.setHydrantStyle,
                     resetStyleOnMouseout: true
                 }
             });
