@@ -27,13 +27,15 @@
       <div class="panel panel-primary">
         <div class="panel-heading">Map</div>
         <div class="panel-body">
-          <div class="map-left">
-            <totals-table data="selectedHydrant.properties" title="selectedHydrant.properties.FACILITYID" view="'attributes'"></totals-table>
-          </div>
-          <div class="map-right">
-            <h4>Search: <input ng-model="searchText" placeholder="type" ng-keyup="searchMap($event, searchText, geojson)"><div cg-busy="searchPromise"></h4>
-            <leaflet geojson="geojson" width="100%" height="800"></leaflet>
-          </div>
+          <div class="row">
+            <div class="col-md-3">
+              <totals-table data="selectedHydrant.properties" title="selectedHydrant.properties.FACILITYID" view="'attributes'"></totals-table>
+            </div>
+            <div class="col-md-9">
+              <h4>Search: <input ng-model="searchText" placeholder="type" ng-keyup="searchMap($event, searchText, geojson)"><div cg-busy="searchPromise"></div></h4>
+              <leaflet geojson="geojson" width="100%" height="800" legend="legend"></leaflet>
+            </div>
+        </div>
         </div>
       </div>
     </div>
@@ -73,8 +75,10 @@
               <th>Station</th>
             </tr>
           </thead>
-          <tbody>
-            <tr ng-repeat="feature in selected.data | filter:searchText | limitTo: 10" ng-mouseover="zoomToFeature(feature)">
+        </table>
+          <table class="repairList table table-hover">
+          <tbody class="repairListScroll">
+            <tr ng-repeat="feature in selected.data | filter:searchText" ng-mouseover="zoomToFeature(feature)">
               <td>{{feature.attributes.FACILITYID}}</td>
               <td>{{feature.attributes.STNUM}} {{feature.attributes.STNAME}} {{feature.attributes.STTYPE}}</td>
               <td ng-if="feature.attributes.OWNEDBY">Private</td>

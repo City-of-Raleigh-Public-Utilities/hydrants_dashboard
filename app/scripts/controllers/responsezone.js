@@ -173,6 +173,11 @@ angular.module('hydrantsDashboard')
                     },
                     style: hydrantEvents.setHydrantStyle,
                     resetStyleOnMouseout: true
+                },
+                legend: {
+                  position: 'bottomleft',
+                  colors: [ '#ff0000', '#0008ff'],
+                  labels: [ 'Repair Needed', 'No Repair Needed']
                 }
             });
 
