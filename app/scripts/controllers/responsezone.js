@@ -151,7 +151,7 @@ angular.module('hydrantsDashboard')
                   fillOpacity: 0.8
                 });
                 layer.bringToFront();
-                $scope.selectedCountry = feature;
+                $scope.selectedHydrant = feature;
                 console.log(feature);
             }
 

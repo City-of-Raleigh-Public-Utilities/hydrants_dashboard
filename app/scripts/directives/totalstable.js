@@ -14,11 +14,13 @@ angular.module('hydrantsDashboard')
       transclude: true,
       scope: {
         data: '=',
-        title: '='
+        title: '=',
+        view: '='
       },
       link: function postLink(scope, element, attrs) {
-        console.log(scope.data);
-        console.log(scope.title);
+
+        scope.defaultTitle = scope.view ? 'FACILITYID: ' : 'Hydrant Totals for ';
+
       }
     };
   });

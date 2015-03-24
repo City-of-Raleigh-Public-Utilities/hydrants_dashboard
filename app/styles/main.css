@@ -121,5 +121,6 @@ body {
 .map-right {
   display: block;
   float: right;
-  width: 80%;
+  width: 75%;
+  height: 100%;
 }
