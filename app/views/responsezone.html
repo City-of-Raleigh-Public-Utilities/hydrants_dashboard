@@ -54,7 +54,7 @@
                 Repair Lists: <select ng-options="repair.name for repair in needsRepair" ng-model="selected"></select>
               </th>
               <th colspan="4">Search: <input ng-model="searchText"></th>
-              <th><button type="button" class="btn btn-success" csv-header="headers" ng-csv="printCSV(selected.data)" filename="{{selected.name}}.csv">Export to CSV</button></th>
+              <th id="print" colspan="7"><button type="button" class="btn btn-success" csv-header="headers" ng-csv="printCSV(selected.data)" filename="{{selected.name}}.csv">Export to CSV</button></th>
             </tr>
             <tr class="table-headings">
               <th>Raleigh ID</th>

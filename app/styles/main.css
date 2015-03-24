@@ -135,6 +135,12 @@ body {
   height: 100%;
 }
 
+#print{
+  position: fixed;
+  right: 20px;
+  border-bottom: none;
+}
+
 ::-webkit-scrollbar {
   width: 15px;
 }
