@@ -122,24 +122,30 @@ angular.module('hydrantsDashboard')
               })
 
 
-              var geojsonMarkerOptions = {
-                radius: 4,
-                fillColor: "#ff7800",
-                color: "#000",
-                weight: 1,
-                opacity: 1,
-                fillOpacity: 0.8
-            };
-
+            //Sets hydrant styles
             function setHydrantStyle (feature){
               switch (feature.properties.REPAIRNEED) {
-                case 0: return {fillColor: "#0008ff"};
-                case 1: return {fillColor: "#ff0000"};
-              }
+                case 0: return {
+                  fillColor: "#0008ff",
+                  color: "#000",
+                  weight: 1,
+                  opacity: 1,
+                  fillOpacity: 0.8,
+                  radius: 4
+                };
+                case 1: return {
+                    fillColor: "#ff0000",
+                    color: "#000",
+                    weight: 1,
+                    opacity: 1,
+                    fillOpacity: 0.8,
+                    radius: 4
+                  };
+                }
             }
 
 
-
+            //Map Events
             leafletData.getMap().then(function(map) {
               $scope.$on("leafletDirectiveMap.geojsonMouseover", function(ev, feature, leafletEvent) {
                   hydrantMouseover(feature, leafletEvent);
@@ -166,8 +172,11 @@ angular.module('hydrantsDashboard')
               };
 
               //Controls search bar above map
-              $scope.searchMap = function($event){
-                console.log($event);
+              $scope.searchMap = function(event){
+                console.log(event);
+                if (event.keyCode === 13){
+
+                }
               };
 
              });
@@ -193,7 +202,7 @@ angular.module('hydrantsDashboard')
                 geojson: {
                     data: res,
                     pointToLayer: function (feature, latlng) {
-                      return L.circleMarker(latlng, geojsonMarkerOptions);
+                      return L.circleMarker(latlng, setHydrantStyle);
                     },
                     style: setHydrantStyle,
                     resetStyleOnMouseout: true
