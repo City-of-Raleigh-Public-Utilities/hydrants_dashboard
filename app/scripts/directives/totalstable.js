@@ -7,7 +7,7 @@
  * # totalsTable
  */
 angular.module('hydrantsDashboard')
-  .directive('totalsTable', function () {
+  .directive('totalsTable', function ($filter) {
     return {
       templateUrl: 'views/totals-table.html',
       restrict: 'E',

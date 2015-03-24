@@ -31,7 +31,7 @@
             <totals-table data="selectedHydrant.properties" title="selectedHydrant.properties.FACILITYID" view="'attributes'"></totals-table>
           </div>
           <div class="map-right">
-            <h4>Search: <input ng-model="searchText" ng-keyup="searchMap($event, searchText, geojson)"><div cg-busy="searchPromise"></h4>
+            <h4>Search: <input ng-model="searchText" placeholder="ex. Adarling or Facility ID" ng-keyup="searchMap($event, searchText, geojson)"><div cg-busy="searchPromise"></h4>
             <leaflet geojson="geojson" width="100%" height="800"></leaflet>
           </div>
         </div>
@@ -57,7 +57,6 @@
             </tr>
             <tr class="table-headings">
               <th>Raleigh ID</th>
-              <th>Jurisid</th>
               <th>Address</th>
               <th>Ownership</th>
               <th>Manufacturer</th>
@@ -76,7 +75,6 @@
           <tbody>
             <tr ng-repeat="feature in selected.data | filter:searchText | limitTo: 10" ng-mouseover="zoomToFeature(feature)">
               <td>{{feature.attributes.FACILITYID}}</td>
-              <td>{{feature.attributes.JURISID || 'N/A'}}</td>
               <td>{{feature.attributes.STNUM}} {{feature.attributes.STNAME}} {{feature.attributes.STTYPE}}</td>
               <td ng-if="feature.attributes.OWNEDBY">Private</td>
               <td ng-if="!feature.attributes.OWNEDBY">Public</td>

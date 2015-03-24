@@ -159,9 +159,12 @@ angular.module('hydrantsDashboard')
           // Make request to hydrants
           agsFactory.publicUtilMS.request(options.hydrants)
             .then(function(res){
-
+              // hydrantStats.addDomains(res.features, function(features){
+              //   res.features = features
+              // });
               console.log($scope.serviceAreas);
               angular.copy(res, $scope.hydrantRef);
+
           //Add hydrants to map
               angular.extend($scope, {
                 geojson: {

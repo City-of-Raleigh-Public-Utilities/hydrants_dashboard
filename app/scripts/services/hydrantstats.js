@@ -95,8 +95,50 @@ angular.module('hydrantsDashboard')
 
         });
 
+        // this.report.features = this.addDomains(features);
+
+
         callback(this.report);
+      },
+
+      addDomains: function (features, callback){
+        features.forEach(function(feature){
+          var prop = feature.properties;
+            for (var key in prop){
+            console.log(prop)
+            switch (key){
+              case 'OWNEDBY':
+                if(prop === 0){
+                  prop = 'City of Raleigh';
+                  console.log(prop)
+                }
+                else if (prop === 1){
+                  prop = 'Private';
+                }
+                else{
+                  prop = 'Other';
+                }
+                break;
+              case 'EDITEDON' | 'CREATEDON':
+                prop = $filter('date')(prop, 'short');
+                break;
+              case 'OPERABLE':
+                prop === 'Y' ? prop = 'Yes' : prop = 'No';
+                break;
+              case 'REPAIRNEED' | 'FLOWED':
+                prop = prop ? 'True' : 'False';
+                break;
+              default:
+
+            }
+            }
+          });
+
+
+        callback(features);
       }
+
+
 
 
     };
