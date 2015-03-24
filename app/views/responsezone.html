@@ -44,54 +44,59 @@
 <!-- </div> -->
 <div class="row">
   <div class="col-md-12 animated zoomIn">
-    <table class="repairList table table-hover">
-      <thead>
-        <tr>
-          <th colspan="2">
-            Repair Lists: <select ng-options="repair.name for repair in needsRepair" ng-model="selected"></select>
-          </th>
-          <th colspan="3">Search: <input ng-model="searchText"></th>
-        </tr>
-        <tr class="table-headings">
-          <th>Raleigh ID</th>
-          <th>Jurisid</th>
-          <th>Address</th>
-          <th>Ownership</th>
-          <th>Manufacturer</th>
-          <th>Year</th>
-          <th>Valve Diameter</th>
-          <th>Pumper Nozzel</th>
-          <th>Side Nozzel</th>
-          <th>Operable</th>
-          <th>Needs Repair</th>
-          <th>Notes</th>
-          <th>RFD_Notes</th>
-          <th>Checked</th>
-          <th>Station</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr ng-repeat="feature in selected.data | filter:searchText | limitTo: 10" ng-mouseover="zoomToFeature(feature)">
-          <td>{{feature.attributes.FACILITYID}}</td>
-          <td>{{feature.attributes.JURISID || 'N/A'}}</td>
-          <td>{{feature.attributes.STNUM}} {{feature.attributes.STNAME}} {{feature.attributes.STTYPE}}</td>
-          <td ng-if="feature.attributes.OWNEDBY">Private</td>
-          <td ng-if="!feature.attributes.OWNEDBY">Public</td>
-          <td>{{feature.attributes.MANUFACTURER || 'N/A'}}</td>
-          <td>{{feature.attributes.HYDRANTYEAR || 'N/A'}}</td>
-          <td>{{feature.attributes.VALVESIZE || 'N/A'}}</td>
-          <td>{{feature.attributes.PUMPERNOZZLETYPE || 'N/A'}}</td>
-          <td>{{feature.attributes.SIDENOZZLETYPE || 'N/A'}}</td>
-          <td ng-if="feature.attributes.OPERABLE === 'Y'">{{'YES' || 'N/A'}}</td>
-          <td ng-if="feature.attributes.OPERABLE === 'N'">{{'No' || 'N/A'}}</td>
-          <td ng-if="feature.attributes.REPAIRNEED">{{'True' || 'N/A'}}</td>
-          <td ng-if="!feature.attributes.REPAIRNEED">{{'False' || 'N/A'}}</td>
-          <td>{{feature.attributes.NOTES || 'N/A'}}</td>
-          <td>{{feature.attributes.RFD_NOTES || 'N/A'}}</td>
-          <td>{{feature.attributes.CHECKED || 'N/A'}}</td>
-          <td>{{feature.attributes.RFD_STATION || 'N/A'}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="panel panel-primary">
+      <div class="panel-heading">Repairs List</div>
+      <div class="panel-body">
+        <table class="repairList table table-hover">
+          <thead>
+            <tr>
+              <th colspan="2">
+                Repair Lists: <select ng-options="repair.name for repair in needsRepair" ng-model="selected"></select>
+              </th>
+              <th colspan="3">Search: <input ng-model="searchText"></th>
+            </tr>
+            <tr class="table-headings">
+              <th>Raleigh ID</th>
+              <th>Jurisid</th>
+              <th>Address</th>
+              <th>Ownership</th>
+              <th>Manufacturer</th>
+              <th>Year</th>
+              <th>Valve Diameter</th>
+              <th>Pumper Nozzel</th>
+              <th>Side Nozzel</th>
+              <th>Operable</th>
+              <th>Needs Repair</th>
+              <th>Notes</th>
+              <th>RFD_Notes</th>
+              <th>Checked</th>
+              <th>Station</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="feature in selected.data | filter:searchText | limitTo: 10" ng-mouseover="zoomToFeature(feature)">
+              <td>{{feature.attributes.FACILITYID}}</td>
+              <td>{{feature.attributes.JURISID || 'N/A'}}</td>
+              <td>{{feature.attributes.STNUM}} {{feature.attributes.STNAME}} {{feature.attributes.STTYPE}}</td>
+              <td ng-if="feature.attributes.OWNEDBY">Private</td>
+              <td ng-if="!feature.attributes.OWNEDBY">Public</td>
+              <td>{{feature.attributes.MANUFACTURER || 'N/A'}}</td>
+              <td>{{feature.attributes.HYDRANTYEAR || 'N/A'}}</td>
+              <td>{{feature.attributes.VALVESIZE || 'N/A'}}</td>
+              <td>{{feature.attributes.PUMPERNOZZLETYPE || 'N/A'}}</td>
+              <td>{{feature.attributes.SIDENOZZLETYPE || 'N/A'}}</td>
+              <td ng-if="feature.attributes.OPERABLE === 'Y'">{{'YES' || 'N/A'}}</td>
+              <td ng-if="feature.attributes.OPERABLE === 'N'">{{'No' || 'N/A'}}</td>
+              <td ng-if="feature.attributes.REPAIRNEED">{{'True' || 'N/A'}}</td>
+              <td ng-if="!feature.attributes.REPAIRNEED">{{'False' || 'N/A'}}</td>
+              <td>{{feature.attributes.NOTES || 'N/A'}}</td>
+              <td>{{feature.attributes.RFD_NOTES || 'N/A'}}</td>
+              <td>{{feature.attributes.CHECKED || 'N/A'}}</td>
+              <td>{{feature.attributes.RFD_STATION || 'N/A'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 </div>
