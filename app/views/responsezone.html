@@ -14,49 +14,22 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-6 animated zoomIn">
-  <table class="totalsReport table table-hover">
-    <thead>
-      <tr>
-        <th>Hydrant Totals for {{today}}</th>
-      </tr>
-      <tr class="table-headings">
-        <th>Key</th>
-        <th>Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="(key, value) in reportTotals.daily">
-        <td>{{key}}</td>
-        <td>{{value}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<div class="col-md-6 animated zoomIn">
-  <table class="totalsReport table table-hover">
-    <thead>
-      <tr>
-        <th>Hydrant Totals for Project</th>
-      </tr>
-      <tr class="table-headings">
-        <th>Key</th>
-        <th>Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="(key, value) in reportTotals.total">
-        <td>{{key}}</td>
-        <td>{{value}}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-</div>
+    <div class="col-md-4 animated zoomIn">
+      <totals-table data="reportTotals.total" title="'Project'" ></totals-table>
+    </div>
+    <div class="col-md-4 animated zoomIn">
+      <totals-table data="reportTotals.daily" title="today" ></totals-table>
+    </div>
+  </div>
   </div>
   <div class="col-xs-6 col-md-5 animated zoomIn">
+    <div class="map-left">
+      <totals-table data="reportTotals.total" title="'Project'" ></totals-table>
+    </div>
+    <div class="map-right">
     <h4>Search: <input ng-model="searchText"></h4>
     <leaflet geojson="geojson" width="100%" height="480px"></leaflet>
+  </div>
   </div>
 
 <!-- {{$route}}
@@ -92,7 +65,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="feature in selected.data | filter:searchText">
+        <tr ng-repeat="feature in selected.data | filter:searchText | limitTo: 10">
           <td>{{feature.FACILITYID}}</td>
           <td>{{feature.JURISID || 'N/A'}}</td>
           <td>{{feature.STNUM}} {{feature.STNAME}} {{feature.STTYPE}}</td>
