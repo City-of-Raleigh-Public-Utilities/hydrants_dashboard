@@ -18,6 +18,10 @@ angular.module('hydrantsDashboard')
 
         services = {
 
+          login: function (user, password) {
+            return mapsServer.requestToken(user, password, 60);
+          },
+
           //Contain Response Districts
           publicSafteyMS: mapsServer.setService({
             folder: 'PublicSafety',
@@ -31,8 +35,19 @@ angular.module('hydrantsDashboard')
             service: 'WaterDistribution',
             server: 'MapServer',
           }),
+          pt_ms: mapstest.setService({
+            folder:'PublicUtility',
+            service: 'ProjectTracking',
+            server: 'MapServer'
+          }),
 
-          mapsServer: mapsServer,
+          //Contains Hydrant data
+          publicUtilFS: mapsServer.setService({
+            folder: 'PublicUtility',
+            service: 'FireHydrants',
+            server: 'FeatureServer',
+          }),
+
           //Add mapstest for geometry services
           mapstest: mapstest
         };

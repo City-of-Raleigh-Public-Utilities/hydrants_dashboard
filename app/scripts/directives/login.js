@@ -7,7 +7,7 @@
  * # login
  */
 angular.module('hydrantsDashboard')
-  .directive('loginForm', [ 'agsFactory', function (agsFactory) {
+  .directive('loginForm', [ 'agsFactory', '$location', '$cookieStore', function (agsFactory, $location, $cookieStore) {
         return {
           restrict: 'E',
           templateUrl: 'views/login-form.html',
@@ -15,12 +15,19 @@ angular.module('hydrantsDashboard')
             $scope.token = '';
             $scope.loggedIn = true;
             $scope.login = function (user, password) {
-              agsFactory.mapsServer.requestToken(user, password, 60).then(function (token) {
+              agsFactory.login(user, password).then(function (token) {
                 $scope.token = token;
                 $scope.loggedIn = token;
+                $cookieStore.put('token', token);
                 if (token) {
                   $scope.modal.modal('hide');
                 }
+                // else {
+                //   $location.url('/');
+                // }
+              },
+              function(err){
+                $location.url('/');
               });
             };
           },
@@ -29,4 +36,4 @@ angular.module('hydrantsDashboard')
             scope.modal.modal({keyboard: false, backdrop: 'static'});
           }
         }
-      }])
+      }]);

@@ -40,7 +40,7 @@ angular
      {
       "name": "Town of Zebulon Fire Department",
       "title": "Zebulon",
-      "icon": "images/zeb_seal.png"
+      "icon": "images/ZFD Patch.jpg"
     },
     {
       "name": "Town of Knightdale Fire Department",
@@ -55,7 +55,7 @@ angular
     {
       "name": "Town of Rolesville Fire Department",
       "title": "Rolesville",
-      "icon": ""
+      "icon": "images/firehydrant-assets/scaled-at-25/Layer 1.png"
     },
     {
       "name": "Wake New Hope",
@@ -65,7 +65,7 @@ angular
      {
       "name": "Eastern Wake Fire Department",
       "title": "Eastern Wake",
-      "icon": ""
+      "icon": "images/firehydrant-assets/scaled-at-25/Layer 1.png"
     }
   ])
   .config(function ($routeProvider, $httpProvider) {
