@@ -32,6 +32,7 @@ angular.module('hydrantsDashboard')
             server: 'MapServer',
           }),
 
+          mapsServer: mapsServer,
           //Add mapstest for geometry services
           mapstest: mapstest
         };

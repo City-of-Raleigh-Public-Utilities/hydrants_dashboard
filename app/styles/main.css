@@ -96,7 +96,7 @@ body {
 
 
 .scroll-tbody {
-  max-height: 750px;
+  max-height: 660px;
   max-width: 100%;
   display: block;
   overflow-y: auto;
