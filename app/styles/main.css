@@ -112,40 +112,23 @@ body {
 }
 
 .repairListScroll {
-  max-height: 500px;
-  display: block;
-  overflow-y: auto;
+  overflow-y: scroll;
   width: 100%;
+  position: relative;
 }
 
-.repairList {
-
-}
 
 .table-headings {
   background: #337ab7;
   color: #fff;
 }
 
-.map-left {
-  display: block;
-  float: left;
-  width: 20%;
-  margin-right: 5px;
-}
+.button-wrapper{
 
-.map-right {
-  display: block;
-  float: right;
-  width: 77%;
-  height: 100%;
 }
 
 #print{
-  position: fixed;
-  right: 20px;
-  top: 7%;
-  border-bottom: none;
+  margin-bottom: 10px;
 }
 
 .legend {

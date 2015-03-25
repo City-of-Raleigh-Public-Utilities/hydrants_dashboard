@@ -33,7 +33,7 @@
             </div>
             <div class="col-md-9">
               <h4>Search: <input ng-model="searchText" placeholder="type" ng-keyup="searchMap($event, searchText, geojson)"><div cg-busy="searchPromise"></div></h4>
-              <leaflet geojson="geojson" width="100%" height="800" legend="legend"></leaflet>
+              <leaflet geojson="geojson" width="100%" height="700px" legend="legend"></leaflet>
             </div>
         </div>
         </div>
@@ -49,15 +49,26 @@
     <div class="panel panel-primary">
       <div class="panel-heading">Repairs List</div>
       <div class="panel-body">
+        <div class="row">
+          <div class="col-md-2">
+            Repair Lists: <select ng-options="repair.name for repair in needsRepair" ng-model="selected"></select>
+          </div>
+          <div class="col-md-2">
+            Search: <input ng-model="searchText">
+          </div>
+          <div id="print" class="col-md-1 col-md-offset-7">
+            <button  type="button" class="btn btn-success btn-sm" csv-header="headers" ng-csv="printCSV(selected.data)" filename="{{selected.name}}.csv">Export to CSV</button>
+          </div>
+        </div>
         <table class="repairList table table-hover">
           <thead>
-            <tr>
+            <!-- <tr>
               <th colspan="2">
                 Repair Lists: <select ng-options="repair.name for repair in needsRepair" ng-model="selected"></select>
               </th>
               <th colspan="4">Search: <input ng-model="searchText"></th>
               <th id="print" colspan="7"><button type="button" class="btn btn-success" csv-header="headers" ng-csv="printCSV(selected.data)" filename="{{selected.name}}.csv">Export to CSV</button></th>
-            </tr>
+            </tr> -->
             <tr class="table-headings">
               <th>Raleigh ID</th>
               <th>Address</th>
@@ -75,8 +86,6 @@
               <th>Station</th>
             </tr>
           </thead>
-        </table>
-          <table class="repairList table table-hover">
           <tbody class="repairListScroll">
             <tr ng-repeat="feature in selected.data | filter:searchText" ng-mouseover="zoomToFeature(feature)">
               <td>{{feature.attributes.FACILITYID}}</td>

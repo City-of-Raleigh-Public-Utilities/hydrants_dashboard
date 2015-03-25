@@ -198,7 +198,10 @@ angular.module('hydrantsDashboard')
               ];
               $scope.selected = $scope.needsRepair[0];
 
-              $scope.headers = Object.keys($scope.needsRepair[0].data[0].attributes);
+              if ($scope.needsRepair[0].data[0]){
+                $scope.headers = Object.keys($scope.needsRepair[0].data[0].attributes);
+              }
+
 
               //Prepares data to print
               $scope.printCSV = function(data){
