@@ -8,18 +8,47 @@
  * Factory in the hydrantsDashboardApp.
  */
 angular.module('hydrantsDashboard')
-  .factory('agsFactory', function (Ags) {
+  .factory('agsFactory', ['Ags', '$http', '$q', '$localStorage', '$location', function (Ags, $http, $q, $localStorage, $location) {
 
     // Add Server Urls
-    var mapsServer = new Ags({'host': 'maps.raleighnc.gov' }),
-        gisServer = new Ags({'host': 'gis.raleighnc.gov' }),
+    var mapsServer = new Ags({'host': 'maps.raleighnc.gov', protocol: 'https'}),
         mapstest = new Ags({'host': 'mapstest.raleighnc.gov'}),
 
 
-        services = {
+        // baseUrl = 'https://maps.raleighnc.gov/arcgis/rest/services/PublicUtility/FireHydrants/FeatureServer';
+        // function getHydrants (options) {
+        //    var deferred = $q.defer();
+        //   $http({
+        //     method: 'GET',
+        //     url: baseUrl+'/0/query',
+        //     params: options,
+        //     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        //   }).success(function (data) {
+        //     deferred.resolve(data);
+        //   });
+        //   return deferred.promise;
+        // };
+
+
+
+
+
+      services = {
 
           login: function (user, password) {
             return mapsServer.requestToken(user, password, 60);
+          },
+
+          isTokenValid: function (exp){
+            var today = new Date();
+            if (today < exp){
+              return true;
+            }
+            else {
+              $location.path('/');
+              return false;
+            }
+
           },
 
           //Contain Response Districts
@@ -29,12 +58,7 @@ angular.module('hydrantsDashboard')
             server: 'MapServer',
           }),
 
-          //Contains Hydrant data
-          publicUtilMS: gisServer.setService({
-            folder: 'PublicUtility',
-            service: 'WaterDistribution',
-            server: 'MapServer',
-          }),
+
           pt_ms: mapstest.setService({
             folder:'PublicUtility',
             service: 'ProjectTracking',
@@ -49,8 +73,12 @@ angular.module('hydrantsDashboard')
           }),
 
           //Add mapstest for geometry services
-          mapstest: mapstest
+          // mapstest: mapstest,
+
+          // getHydrants: getHydrants,
+
+
         };
 
         return (services);
-  });
+  }]);

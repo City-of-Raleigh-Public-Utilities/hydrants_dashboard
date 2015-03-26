@@ -16,6 +16,7 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'ngStorage',
     'agsserver',
     'leaflet-directive',
     'cgBusy',
@@ -68,6 +69,10 @@ angular
       "icon": "images/easternwake.png"
     }
   ])
+  .constant('OAUTH', {
+    'client_id': 'QtlfEMrIEYsKNsnU',
+    'client_secret': 'de66fbc7dc584ef494c6cda6e602f196',
+  })
   .config(function ($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {

@@ -8,13 +8,16 @@
  * Controller of the hydrantsDashboardApp
  */
 angular.module('hydrantsDashboard')
-  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval', 'hydrantStats', 'hydrantEvents', '$timeout', '$cookies',
-    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval, hydrantStats, hydrantEvents, $timeout, $cookies) {
+  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval', 'hydrantStats', 'hydrantEvents', '$timeout', '$localStorage',
+    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval, hydrantStats, hydrantEvents, $timeout, $localStorage) {
+
 
     //Get Route Details
     //  $scope.$route = $route;
     //  $scope.$location = $location;
      $scope.$routeParams = $routeParams;
+
+     agsFactory.isTokenValid($localStorage.expires);
 
      $scope.responseZone = $routeParams.zone;
 
@@ -24,7 +27,10 @@ angular.module('hydrantsDashboard')
        }
      });
 
+     $scope.token = $localStorage.token;
+     $scope.$watch('token', function (token) {
 
+     });
      //Placeholder for hydrant selection
      $scope.selectedHydrant = {};
 
@@ -49,12 +55,12 @@ angular.module('hydrantsDashboard')
         }
       },
       hydrants: {
-        layer: 'Water Hydrants',
+        layer: 'Fire Hydrants',
         geojson: true,
         actions: 'query',
-        // token: $cookies.token,
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         params: {
-          // token: $cookies.token,
+          token: $scope.token,
           f: 'json',
           geometryType: 'esriGeometryPolygon',
           outFields: 'STNUM, STENUM,STPREFIX, STNAME, STTYPE, STSUFFIX, OWNEDBY, MANUFACTURER, HYDRANTYEAR, VALVESIZE, PUMPERNOZZLETYPE, SIDENOZZLETYPE, OPERABLE, REPAIRNEED, NOTES, RFD_NOTES, FACILITYID, CHECKED, JURISID, RFDSTATION, EDITEDON, CREATEDON',
@@ -159,10 +165,24 @@ angular.module('hydrantsDashboard')
           //Set bounds for query
           options.hydrants.params.geometry = districts;
 
+
+
+
+
+          // options.hydrants.geometry = districts;
+          // agsFactory.getHydrants(options.hydrants)
           // Make request to hydrants
-          agsFactory.publicUtilMS.request(options.hydrants)
-          // agsFactory.publicUtilFS.authRequest(options.hydrants)
+          // agsFactory.publicUtilFS.request(options.hydrants)
+          agsFactory.publicUtilFS.request(options.hydrants)
             .then(function(res){
+              console.log(res);
+              try{
+                if (typeof res !== 'object') throw {error: 'Please login'};
+              }
+              catch (err){
+                console.log(err);
+                return;
+              }
               // hydrantStats.addDomains(res.features, function(features){
               //   res.features = features
               // });

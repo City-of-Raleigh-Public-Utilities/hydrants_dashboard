@@ -7,7 +7,7 @@
  * # login
  */
 angular.module('hydrantsDashboard')
-  .directive('loginForm', [ 'agsFactory', '$location', '$cookieStore', function (agsFactory, $location, $cookieStore) {
+  .directive('loginForm', [ 'agsFactory', '$location', '$localStorage', function (agsFactory, $location, $localStorage) {
         return {
           restrict: 'E',
           templateUrl: 'views/login-form.html',
@@ -15,10 +15,18 @@ angular.module('hydrantsDashboard')
             $scope.token = '';
             $scope.loggedIn = true;
             $scope.login = function (user, password) {
-              agsFactory.login(user, password).then(function (token) {
+              var options = {
+                username: user,
+                password: password,
+                expiration: 60,
+                f: 'json'
+              };
+              agsFactory.login(options).then(function (token) {
+              // agsFactory.getToken().then(function (token) {
                 $scope.token = token;
                 $scope.loggedIn = token;
-                $cookieStore.put('token', token);
+                $localStorage.token= token.token;
+                $localStorage.expires= token.expires;
                 if (token) {
                   $scope.modal.modal('hide');
                 }
@@ -32,8 +40,11 @@ angular.module('hydrantsDashboard')
             };
           },
           link: function (scope, element, attrs) {
-            scope.modal = $('.modal', element[0])
-            scope.modal.modal({keyboard: false, backdrop: 'static'});
+            scope.status = agsFactory.isTokenValid($localStorage.expires);
+            if(!scope.status){
+              scope.modal = $('.modal', element[0]);
+              scope.modal.modal({keyboard: false, backdrop: 'static'});
+            }
           }
         }
       }]);
