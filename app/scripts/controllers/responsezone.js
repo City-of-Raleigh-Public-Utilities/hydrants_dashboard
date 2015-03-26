@@ -8,8 +8,8 @@
  * Controller of the hydrantsDashboardApp
  */
 angular.module('hydrantsDashboard')
-  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval', 'hydrantStats', 'hydrantEvents', '$timeout',
-    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval, hydrantStats, hydrantEvents, $timeout) {
+  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval', 'hydrantStats', 'hydrantEvents', '$timeout', '$cookies',
+    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval, hydrantStats, hydrantEvents, $timeout, $cookies) {
 
     //Get Route Details
     //  $scope.$route = $route;
@@ -52,7 +52,9 @@ angular.module('hydrantsDashboard')
         layer: 'Water Hydrants',
         geojson: true,
         actions: 'query',
+        // token: $cookies.token,
         params: {
+          // token: $cookies.token,
           f: 'json',
           geometryType: 'esriGeometryPolygon',
           outFields: 'STNUM, STENUM,STPREFIX, STNAME, STTYPE, STSUFFIX, OWNEDBY, MANUFACTURER, HYDRANTYEAR, VALVESIZE, PUMPERNOZZLETYPE, SIDENOZZLETYPE, OPERABLE, REPAIRNEED, NOTES, RFD_NOTES, FACILITYID, CHECKED, JURISID, RFDSTATION, EDITEDON, CREATEDON',
@@ -159,6 +161,7 @@ angular.module('hydrantsDashboard')
 
           // Make request to hydrants
           agsFactory.publicUtilMS.request(options.hydrants)
+          // agsFactory.publicUtilFS.authRequest(options.hydrants)
             .then(function(res){
               // hydrantStats.addDomains(res.features, function(features){
               //   res.features = features

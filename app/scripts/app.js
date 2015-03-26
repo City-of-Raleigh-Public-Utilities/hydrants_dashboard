@@ -30,7 +30,7 @@ angular
     {
       "name": "Town of Garner Fire Department",
       "title": "Garner",
-      "icon": "images/garner_fire_logo.jpg"
+      "icon": "images/garner.png"
     },
      {
       "name": "Town of Wake Forest Fire Department",
@@ -65,7 +65,7 @@ angular
      {
       "name": "Eastern Wake Fire Department",
       "title": "Eastern Wake",
-      "icon": "images/firehydrant-assets/scaled-at-25/Layer 1.png"
+      "icon": "images/easternwake.png"
     }
   ])
   .config(function ($routeProvider, $httpProvider) {
