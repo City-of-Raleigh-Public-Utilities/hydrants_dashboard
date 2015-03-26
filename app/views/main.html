@@ -19,7 +19,7 @@
   <!-- Three columns of text below the carousel -->
   <div class="row">
     <div class="col-lg-4" ng-repeat="dept in departments | orderBy: '+title'">
-      <img class="img-rounded" ng-src="{{dept.icon}}" alt="Department Badge" width="140" height="140">
+      <a ng-href="#/responseZone/{{dept.title}}"><img class="img-rounded" ng-src="{{dept.icon}}" alt="Department Badge" width="140" height="140"></a>
       <h2>{{dept.title}}</h2>
       <p>{{dept.name}}</p>
       <p><a class="btn btn-primary" ng-href="#/responseZone/{{dept.title}}" role="button">View details &raquo;</a></p>

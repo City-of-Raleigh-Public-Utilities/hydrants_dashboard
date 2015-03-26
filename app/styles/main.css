@@ -123,8 +123,13 @@ body {
   color: #fff;
 }
 
-.button-wrapper{
+.mapNav{
+  background: #337ab7;
+  color: #fff;
+}
 
+.mapText{
+  color: #000000;
 }
 
 #print{
