@@ -29,10 +29,16 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-md-3">
+              <div ng-hide="selectedHydrant.properties" class="panel panel-primary">
+                <div class="panel-heading">Actions</div>
+                <div class="panel-body">
+                  Hover or click on hydrant
+                </div>
+              </div>
               <totals-table data="selectedHydrant.properties" title="selectedHydrant.properties.FACILITYID" view="'attributes'"></totals-table>
             </div>
             <div class="col-md-9">
-              <h4>Search: <input ng-model="searchText" placeholder="type" ng-keyup="searchMap($event, searchText, geojson)"><div cg-busy="searchPromise"></div></h4>
+              <h4>Search: <input ng-model="searchText" placeholder="type" ng-keyup="searchMap($event, searchText, geojson)"><div cg-busy="searchPromise || hydrantPromise"></div></h4>
               <leaflet geojson="geojson" width="100%" height="700px" legend="legend"></leaflet>
             </div>
         </div>

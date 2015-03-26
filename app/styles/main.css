@@ -171,3 +171,17 @@ body {
       ::-webkit-scrollbar-corner {
         background-color: black;
         } /* if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */
+
+
+/* when hiding the picture */
+.ng-hide-add {
+  /*-webkit-animation: pulse 0.5s;
+    animation: pulse 0.5s;
+    display: block !important;*/
+}
+/* when showing the picture */
+.ng-hide-remove {
+   -webkit-animation: fadeIn 1s;
+    animation: fadeIn 1s;
+    display: block !important;
+}

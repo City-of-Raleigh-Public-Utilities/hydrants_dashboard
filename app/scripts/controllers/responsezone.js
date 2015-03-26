@@ -173,8 +173,9 @@ angular.module('hydrantsDashboard')
           // agsFactory.getHydrants(options.hydrants)
           // Make request to hydrants
           // agsFactory.publicUtilFS.request(options.hydrants)
-          agsFactory.publicUtilFS.request(options.hydrants)
-            .then(function(res){
+          $scope.hydrantPromise = agsFactory.publicUtilFS.request(options.hydrants);
+          
+          $scope.hydrantPromise.then(function(res){
               console.log(res);
               try{
                 if (typeof res !== 'object') throw {error: 'Please login'};
