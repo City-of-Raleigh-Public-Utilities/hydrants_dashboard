@@ -18,16 +18,16 @@ angular.module('hydrantsDashboard')
           style: function (feature){
             switch (feature.properties.CHECKED) {
               case 'N': return {
-                fillColor: "#0008ff",
-                color: "#000",
+                fillColor: '#0008ff',
+                color: '#000',
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8,
                 radius: 4
               };
               case 'Y': return {
-                  fillColor: "#ff0000",
-                  color: "#000",
+                  fillColor: '#ff0000',
+                  color: '#000',
                   weight: 1,
                   opacity: 1,
                   fillOpacity: 0.8,
@@ -46,16 +46,16 @@ angular.module('hydrantsDashboard')
           style: function (feature){
             switch (feature.properties.REPAIRNEED) {
               case 0: return {
-                fillColor: "#0008ff",
-                color: "#000",
+                fillColor: '#0008ff',
+                color: '#000',
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8,
                 radius: 4
               };
               case 1: return {
-                  fillColor: "#ff0000",
-                  color: "#000",
+                  fillColor: '#ff0000',
+                  color: '#000',
                   weight: 1,
                   opacity: 1,
                   fillOpacity: 0.8,
@@ -74,16 +74,16 @@ angular.module('hydrantsDashboard')
           style:function (feature){
             switch (feature.properties.OPERABLE) {
               case 'N': return {
-                fillColor: "#0008ff",
-                color: "#000",
+                fillColor: '#0008ff',
+                color: '#000',
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8,
                 radius: 4
               };
               case 'Y': return {
-                  fillColor: "#ff0000",
-                  color: "#000",
+                fillColor: '#ff0000',
+                color: '#000',
                   weight: 1,
                   opacity: 1,
                   fillOpacity: 0.8,
@@ -101,16 +101,16 @@ angular.module('hydrantsDashboard')
       setHydrantStyle: function (feature){
         switch (feature.properties.REPAIRNEED) {
           case 0: return {
-            fillColor: "#0008ff",
-            color: "#000",
+            fillColor: '#0008ff',
+            color: '#000',
             weight: 1,
             opacity: 1,
             fillOpacity: 0.8,
             radius: 4
           };
           case 1: return {
-              fillColor: "#ff0000",
-              color: "#000",
+              fillColor: '#ff0000',
+              color: '#000',
               weight: 1,
               opacity: 1,
               fillOpacity: 0.8,
@@ -123,8 +123,8 @@ angular.module('hydrantsDashboard')
             var layer = leafletEvent.target;
             layer.setStyle({
               radius: 6,
-              fillColor: "#00ffe6",
-              color: "#000",
+              fillColor: '#00ffe6',
+              color: '#000',
               weight: 1,
               opacity: 1,
               fillOpacity: 0.8
@@ -136,7 +136,7 @@ angular.module('hydrantsDashboard')
         //Zoom to feature on click
         zoomToFeature: function (featureSelected){
           leafletData.getMap().then(function(map) {
-            var coords = [featureSelected.geometry.coordinates[1], featureSelected.geometry.coordinates[0]]
+            var coords = [featureSelected.geometry.coordinates[1], featureSelected.geometry.coordinates[0]];
             map.setView(coords, 18);
           });
         },

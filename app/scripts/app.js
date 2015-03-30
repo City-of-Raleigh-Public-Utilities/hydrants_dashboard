@@ -22,57 +22,53 @@ angular
     'cgBusy',
     'ngCsv'
   ])
-  .constant("FIREDEPTS", [
+  .constant('FIREDEPTS', [
      {
-      "name": "City of Raleigh Fire Department",
-      "title": "Raleigh",
-      "icon": "images/Raleigh_Fire_Department_Logo.png"
+      'name': 'City of Raleigh Fire Department',
+      'title': 'Raleigh',
+      'icon': 'images/Raleigh_Fire_Department_Logo.png'
     },
     {
-      "name": "Town of Garner Fire Department",
-      "title": "Garner",
-      "icon": "images/garner.png"
-    },
-     {
-      "name": "Town of Wake Forest Fire Department",
-      "title": "Wake Forest",
-      "icon": "images/wakeforest_logo.jpg"
+      'name': 'Town of Garner Fire Department',
+      'title': 'Garner',
+      'icon': 'images/garner.png'
     },
      {
-      "name": "Town of Zebulon Fire Department",
-      "title": "Zebulon",
-      "icon": "images/ZFD Patch.jpg"
-    },
-    {
-      "name": "Town of Knightdale Fire Department",
-      "title": "Knightdale",
-      "icon": "images/kdaleseal.png"
-    },
-    {
-      "name": "Town of Wendell Fire Department",
-      "title": "Wendell",
-      "icon": "images/wendellfire6.jpg"
-    },
-    {
-      "name": "Town of Rolesville Fire Department",
-      "title": "Rolesville",
-      "icon": "images/firehydrant-assets/scaled-at-25/Layer 1.png"
-    },
-    {
-      "name": "Wake-New Hope",
-      "title": "Wake-New Hope",
-      "icon": "images/WakeNewHopePatch.png"
+      'name': 'Town of Wake Forest Fire Department',
+      'title': 'Wake Forest',
+      'icon': 'images/wakeforest_logo.jpg'
     },
      {
-      "name": "Eastern Wake Fire Department",
-      "title": "Eastern Wake",
-      "icon": "images/easternwake.png"
+      'name': 'Town of Zebulon Fire Department',
+      'title': 'Zebulon',
+      'icon': 'images/ZFD Patch.jpg'
+    },
+    {
+      'name': 'Town of Knightdale Fire Department',
+      'title': 'Knightdale',
+      'icon': 'images/kdaleseal.png'
+    },
+    {
+      'name': 'Town of Wendell Fire Department',
+      'title': 'Wendell',
+      'icon': 'images/wendellfire6.jpg'
+    },
+    {
+      'name': 'Town of Rolesville Fire Department',
+      'title': 'Rolesville',
+      'icon': 'images/firehydrant-assets/scaled-at-25/Layer 1.png'
+    },
+    {
+      'name': 'Wake-New Hope',
+      'title': 'Wake-New Hope',
+      'icon': 'images/WakeNewHopePatch.png'
+    },
+     {
+      'name': 'Eastern Wake Fire Department',
+      'title': 'Eastern Wake',
+      'icon': 'images/easternwake.png'
     }
   ])
-  .constant('OAUTH', {
-    'client_id': 'QtlfEMrIEYsKNsnU',
-    'client_secret': 'de66fbc7dc584ef494c6cda6e602f196',
-  })
   .config(function ($routeProvider, $httpProvider) {
     $routeProvider
       .when('/', {

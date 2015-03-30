@@ -28,9 +28,7 @@ angular.module('hydrantsDashboard')
      });
 
      $scope.token = $localStorage.token;
-     $scope.$watch('token', function (token) {
 
-     });
      //Placeholder for hydrant selection
      $scope.selectedHydrant = {};
 
@@ -93,11 +91,11 @@ angular.module('hydrantsDashboard')
 
     //Map Events
     leafletData.getMap().then(function(map) {
-      $scope.$on("leafletDirectiveMap.geojsonMouseover", function(ev, feature, leafletEvent) {
+      $scope.$on('leafletDirectiveMap.geojsonMouseover', function(ev, feature, leafletEvent) {
         $scope.selectedHydrant = hydrantEvents.hydrantMouseover(feature, leafletEvent);
       });
 
-      $scope.$on("leafletDirectiveMap.geojsonClick", function(ev, featureSelected, leafletEvent) {
+      $scope.$on('leafletDirectiveMap.geojsonClick', function(ev, featureSelected, leafletEvent) {
           hydrantEvents.zoomToFeature(featureSelected);
       });
 

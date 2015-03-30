@@ -106,12 +106,10 @@ angular.module('hydrantsDashboard')
         features.forEach(function(feature){
           var prop = feature.properties;
             for (var key in prop){
-            console.log(prop)
             switch (key){
               case 'OWNEDBY':
                 if(prop === 0){
                   prop = 'City of Raleigh';
-                  console.log(prop)
                 }
                 else if (prop === 1){
                   prop = 'Private';
