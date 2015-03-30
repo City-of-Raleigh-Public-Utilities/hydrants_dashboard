@@ -87,6 +87,10 @@ angular
         templateUrl: 'views/responsezone.html',
         controller: 'ResponsezoneCtrl'
       })
+      .when('/contacts', {
+        templateUrl: 'views/contacts.html',
+        controller: 'ContactsCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
