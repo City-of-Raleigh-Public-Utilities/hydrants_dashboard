@@ -66,7 +66,8 @@ angular.module('hydrantsDashboard')
       getReport: function (features, callback){
         var that = this;
         //reset stats
-        angular.extend(this.report, cleanReport);
+
+        this.report = angular.copy(cleanReport);
         features.forEach(function(feature){
 
           var prop = feature.properties;

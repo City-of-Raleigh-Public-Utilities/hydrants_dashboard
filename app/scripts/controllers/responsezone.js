@@ -151,7 +151,7 @@ angular.module('hydrantsDashboard')
           // var districts = Terraformer.ArcGIS.convert(enveloped.geometry);
 
 
-          var simplified = turf.simplify(res.features[0], 0.009, true);
+          var simplified = turf.simplify(res.features[0], 0.02, true);
           console.log(simplified);
           var districts = Terraformer.ArcGIS.convert(simplified.geometry);
           console.log(districts);

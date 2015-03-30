@@ -12,7 +12,7 @@ angular.module('hydrantsDashboard')
 
     // Add Server Urls
     var mapsServer = new Ags({'host': 'maps.raleighnc.gov', protocol: 'https'}),
-        mapstest = new Ags({'host': 'mapstest.raleighnc.gov'}),
+
 
 
         // baseUrl = 'https://maps.raleighnc.gov/arcgis/rest/services/PublicUtility/FireHydrants/FeatureServer';
@@ -56,13 +56,6 @@ angular.module('hydrantsDashboard')
             folder: 'PublicUtility',
             service: 'FireHydrants',
             server: 'MapServer',
-          }),
-
-
-          fi_ms: mapstest.setService({
-            folder:'PublicUtility',
-            service: 'HydrantInspection',
-            server: 'MapServer'
           }),
 
           //Contains Hydrant data
