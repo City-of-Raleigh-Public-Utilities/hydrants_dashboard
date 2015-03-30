@@ -12,6 +12,92 @@ angular.module('hydrantsDashboard')
     var MapEvents = {
 
       //Sets hydrant styles
+      filters: [
+        {
+          name: 'Checked',
+          style: function (feature){
+            switch (feature.properties.CHECKED) {
+              case 'N': return {
+                fillColor: "#0008ff",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8,
+                radius: 4
+              };
+              case 'Y': return {
+                  fillColor: "#ff0000",
+                  color: "#000",
+                  weight: 1,
+                  opacity: 1,
+                  fillOpacity: 0.8,
+                  radius: 4
+                };
+              }
+            },
+          legend: {
+            position: 'bottomleft',
+            colors: [ '#ff0000', '#0008ff'],
+            labels: [ 'Checked', 'Not Checked']
+          }
+        },
+        {
+          name: 'Reparis',
+          style: function (feature){
+            switch (feature.properties.REPAIRNEED) {
+              case 0: return {
+                fillColor: "#0008ff",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8,
+                radius: 4
+              };
+              case 1: return {
+                  fillColor: "#ff0000",
+                  color: "#000",
+                  weight: 1,
+                  opacity: 1,
+                  fillOpacity: 0.8,
+                  radius: 4
+                };
+              }
+            },
+          legend: {
+            position: 'bottomleft',
+            colors: [ '#ff0000', '#0008ff'],
+            labels: [ 'Repair Needed', 'No Repair Needed']
+          }
+        },
+         {
+          name: 'Operable',
+          style:function (feature){
+            switch (feature.properties.OPERABLE) {
+              case 'N': return {
+                fillColor: "#0008ff",
+                color: "#000",
+                weight: 1,
+                opacity: 1,
+                fillOpacity: 0.8,
+                radius: 4
+              };
+              case 'Y': return {
+                  fillColor: "#ff0000",
+                  color: "#000",
+                  weight: 1,
+                  opacity: 1,
+                  fillOpacity: 0.8,
+                  radius: 4
+                };
+              }
+            },
+          legend: {
+            position: 'bottomleft',
+            colors: [ '#ff0000', '#0008ff'],
+            labels: [ 'Operable', 'Not Operable']
+          }
+        }
+      ],
       setHydrantStyle: function (feature){
         switch (feature.properties.REPAIRNEED) {
           case 0: return {
@@ -32,7 +118,6 @@ angular.module('hydrantsDashboard')
             };
           }
         },
-
         // Mouse over function, called from the Leaflet Map Events
         hydrantMouseover: function (feature, leafletEvent) {
             var layer = leafletEvent.target;

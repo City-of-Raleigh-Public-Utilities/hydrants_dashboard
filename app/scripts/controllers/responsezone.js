@@ -37,6 +37,24 @@ angular.module('hydrantsDashboard')
      //Hydrants reference used in search
      $scope.hydrantRef = {};
 
+     //Map filters
+     $scope.mapFilterOptions = hydrantEvents.filters;
+     $scope.mapFilterSelection = hydrantEvents.filters[0];
+
+     $scope.updateFilter = function(){
+       angular.extend($scope, {
+         geojson: {
+             data: $scope.geojson.data,
+             pointToLayer: function (feature, latlng) {
+               return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
+             },
+             style: $scope.mapFilterSelection.style,
+             resetStyleOnMouseout: true
+         },
+         legend: $scope.mapFilterSelection.legend
+     });
+   };
+
      //Set current date
      $interval(function(){
        $scope.today = $filter('date')(new Date(), 'short');
@@ -45,10 +63,12 @@ angular.module('hydrantsDashboard')
      //Set options for query
      var options = {
        serviceArea: {
-        layer: 'County Fire Response Districts',
+        layer: 'Combined Fire Response',
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         geojson: true,
         actions: 'query',
         params: {
+          token: $scope.token,
           f: 'json',
           text: $scope.responseZone,
           outSR: 4326
@@ -63,7 +83,7 @@ angular.module('hydrantsDashboard')
           token: $scope.token,
           f: 'json',
           geometryType: 'esriGeometryPolygon',
-          outFields: 'STNUM, STENUM,STPREFIX, STNAME, STTYPE, STSUFFIX, OWNEDBY, MANUFACTURER, HYDRANTYEAR, VALVESIZE, PUMPERNOZZLETYPE, SIDENOZZLETYPE, OPERABLE, REPAIRNEED, NOTES, RFD_NOTES, FACILITYID, CHECKED, JURISID, RFDSTATION, EDITEDON, CREATEDON',
+          outFields: 'STNUM, ISSUE1, ISSUE2, SERVICEDBY, FLOWDATE, STENUM, STPREFIX, STNAME, STTYPE, STSUFFIX, OWNEDBY, MANUFACTURER, HYDRANTYEAR, VALVESIZE, PUMPERNOZZLETYPE, SIDENOZZLETYPE, OPERABLE, REPAIRNEED, NOTES, RFD_NOTES, FACILITYID, CHECKED, JURISID, RFDSTATION, EDITEDON, CREATEDON',
           inSR: 4326,
           outSR: 4326,
           spatialRel: 'esriSpatialRelContains'
@@ -113,9 +133,6 @@ angular.module('hydrantsDashboard')
           });
         }, 500);
 
-
-          // map.setView([$scope.geojson.features[1], feature.geom.coordinates[0]], 18);
-        // }
       };
 
      });
@@ -123,14 +140,21 @@ angular.module('hydrantsDashboard')
       var mapBounds =  new L.FeatureGroup();
       $scope.serviceAreas;
 
-      agsFactory.publicSafteyMS.request(options.serviceArea)
+      agsFactory.publicUtilMS.request(options.serviceArea)
+      // agsFactory.publicSafteyMS.request(options.serviceArea)
         .then(function(res){
           console.log(res);
 
           $scope.serviceAreas = turf.combine(res);
-          var enveloped = turf.envelope($scope.serviceAreas);
-          var districts = Terraformer.ArcGIS.convert(enveloped.geometry);
-          console.log(enveloped);
+          // console.log($scope.serviceAreas);
+          // var enveloped = turf.envelope($scope.serviceAreas);
+          // var districts = Terraformer.ArcGIS.convert(enveloped.geometry);
+
+
+          var simplified = turf.simplify(res.features[0], 0.05, true);
+          console.log(simplified);
+          var districts = Terraformer.ArcGIS.convert(simplified.geometry);
+          console.log(districts);
 
 
           //Empties exisiting feature group
@@ -139,7 +163,7 @@ angular.module('hydrantsDashboard')
 
         leafletData.getMap().then(function(map) {
           //Sets geojson object and adds each layer to featureGroup as a layer, so it can be edited
-          L.geoJson(res, {
+          L.geoJson($scope.serviceAreas, {
             style: {
                 fillColor: 'rgba(50, 173, 2, 0.74)',
                 weight: 2,
@@ -165,16 +189,13 @@ angular.module('hydrantsDashboard')
           //Set bounds for query
           options.hydrants.params.geometry = districts;
 
-
-
-
-
-          // options.hydrants.geometry = districts;
-          // agsFactory.getHydrants(options.hydrants)
           // Make request to hydrants
           // agsFactory.publicUtilFS.request(options.hydrants)
+
+          //start
+
           $scope.hydrantPromise = agsFactory.publicUtilFS.request(options.hydrants);
-          
+
           $scope.hydrantPromise.then(function(res){
               console.log(res);
               try{
@@ -196,14 +217,10 @@ angular.module('hydrantsDashboard')
                     pointToLayer: function (feature, latlng) {
                       return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
                     },
-                    style: hydrantEvents.setHydrantStyle,
+                    style: $scope.mapFilterSelection.style,
                     resetStyleOnMouseout: true
                 },
-                legend: {
-                  position: 'bottomleft',
-                  colors: [ '#ff0000', '#0008ff'],
-                  labels: [ 'Repair Needed', 'No Repair Needed']
-                }
+                legend: $scope.mapFilterSelection.legend
             });
 
             //Generate map reports

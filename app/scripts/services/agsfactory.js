@@ -52,16 +52,16 @@ angular.module('hydrantsDashboard')
           },
 
           //Contain Response Districts
-          publicSafteyMS: mapsServer.setService({
-            folder: 'PublicSafety',
-            service: 'PublicSafety',
+          publicUtilMS: mapsServer.setService({
+            folder: 'PublicUtility',
+            service: 'FireHydrants',
             server: 'MapServer',
           }),
 
 
-          pt_ms: mapstest.setService({
+          fi_ms: mapstest.setService({
             folder:'PublicUtility',
-            service: 'ProjectTracking',
+            service: 'HydrantInspection',
             server: 'MapServer'
           }),
 

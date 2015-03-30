@@ -47,7 +47,7 @@
                       </div>
                       <div class="form-group">
                         <label for="mapSearch">Filter: </label>
-                        <select id="mapFilter" class="mapText" ng-options="repair.name for repair in needsRepair" ng-model=""></select>
+                        <select id="mapFilter" class="mapText" ng-options="mapFilter.name for mapFilter in mapFilterOptions" ng-model="mapFilterSelection" ng-change="updateFilter()"></select>
                       </div>
                     </form>
                   </div>
