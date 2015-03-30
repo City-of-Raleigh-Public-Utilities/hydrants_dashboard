@@ -37,12 +37,12 @@ angular.module('hydrantsDashboard')
             },
           legend: {
             position: 'bottomleft',
-            colors: [ '#ff0000', '#0008ff'],
+            colors: [ '#0008ff', '#ff0000'],
             labels: [ 'Checked', 'Not Checked']
           }
         },
         {
-          name: 'Reparis',
+          name: 'Repairs',
           style: function (feature){
             switch (feature.properties.REPAIRNEED) {
               case 0: return {
@@ -93,7 +93,7 @@ angular.module('hydrantsDashboard')
             },
           legend: {
             position: 'bottomleft',
-            colors: [ '#ff0000', '#0008ff'],
+            colors: [ '#0008ff', '#ff0000'],
             labels: [ 'Operable', 'Not Operable']
           }
         }

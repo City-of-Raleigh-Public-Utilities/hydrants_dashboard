@@ -87,7 +87,7 @@ angular
         templateUrl: 'views/responsezone.html',
         controller: 'ResponsezoneCtrl'
       })
-      .when('/contacts', {
+      .when('/contact', {
         templateUrl: 'views/contacts.html',
         controller: 'ContactsCtrl'
       })

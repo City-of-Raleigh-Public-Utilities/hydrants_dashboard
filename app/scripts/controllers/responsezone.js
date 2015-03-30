@@ -8,8 +8,8 @@
  * Controller of the hydrantsDashboardApp
  */
 angular.module('hydrantsDashboard')
-  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval', 'hydrantStats', 'hydrantEvents', '$timeout', '$localStorage',
-    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval, hydrantStats, hydrantEvents, $timeout, $localStorage) {
+  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval', 'hydrantStats', 'hydrantEvents', '$timeout', '$localStorage', 'icons',
+    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval, hydrantStats, hydrantEvents, $timeout, $localStorage, icons) {
 
 
     //Get Route Details
@@ -216,6 +216,8 @@ angular.module('hydrantsDashboard')
                     data: res,
                     pointToLayer: function (feature, latlng) {
                       return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
+                      // return L.marker(latlng, {icon: L.icon(icons.public)});
+
                     },
                     style: $scope.mapFilterSelection.style,
                     resetStyleOnMouseout: true
