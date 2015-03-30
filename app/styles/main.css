@@ -100,7 +100,7 @@ table {
 
 
 .scroll-tbody {
-  max-height: 660px;
+  max-height: 610px;
   max-width: 100%;
   display: block;
   overflow-y: auto;

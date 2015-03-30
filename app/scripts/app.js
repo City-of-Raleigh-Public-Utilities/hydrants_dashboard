@@ -59,8 +59,8 @@ angular
       "icon": "images/firehydrant-assets/scaled-at-25/Layer 1.png"
     },
     {
-      "name": "Wake New Hope",
-      "title": "Wake New Hope",
+      "name": "Wake-New Hope",
+      "title": "Wake-New Hope",
       "icon": "images/WakeNewHopePatch.png"
     },
      {
@@ -79,10 +79,10 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
-      })
+      // .when('/about', {
+      //   templateUrl: 'views/about.html',
+      //   controller: 'AboutCtrl'
+      // })
       .when('/responseZone/:zone', {
         templateUrl: 'views/responsezone.html',
         controller: 'ResponsezoneCtrl'
