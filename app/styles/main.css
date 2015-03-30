@@ -108,6 +108,16 @@ table {
   width: 100%;
 }
 
+#table-features{
+  display: table;
+  width: 100%;
+}
+
+#table-values{
+  text-align: right;
+  padding-right: 25px;
+}
+
 
 
 #map {

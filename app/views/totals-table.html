@@ -32,9 +32,9 @@
 
 <table ng-show="view" class="totalsReport table table-hover">
   <tbody class="scroll-tbody">
-    <tr ng-repeat="(key, value) in data">
+    <tr id="table-features" ng-repeat="(key, value) in data">
       <td>{{key}}</td>
-      <td>{{value}}</td>
+      <td id="table-values">{{value}}</td>
     </tr>
   </tbody>
 </table>
