@@ -1,16 +1,14 @@
-<div class="row">
+<div class="row top-row">
   <div class="col-md-3 animated zoomIn">
     <!-- <div class="col-xs-6 col-md-9 animated zoomIn fullview"> -->
-      <div class="panel panel-primary">
+      <div class="panel panel-primary top-panel">
         <div class="panel-heading">Reports</div>
         <div class="panel-body">
         <div class="row">
           <div class="col-md-12 animated zoomIn">
             <div class="media">
             <div class="media-left media-middle">
-              <a href="#">
-                <img class="media-object" style="height: 150px; width: 150px;" ng-src="{{badge}}" alt="badge">
-              </a>
+                <img class="media-object animated flip" style="height: 150px; width: 150px;" ng-src="{{badge}}" alt="badge">
             </div>
             <div class="media-body media-middle">
               <h2 class="media-heading main-heading">{{$routeParams.zone}}</h2>
@@ -24,7 +22,7 @@
       </div>
     </div>
     <div class="col-md-9 animated zoomIn">
-      <div class="panel panel-primary">
+      <div class="panel panel-primary top-panel">
         <div class="panel-heading">Map</div>
         <div class="panel-body">
           <div class="row">
@@ -52,7 +50,7 @@
                     </form>
                   </div>
                   <div class="panel-body">
-                    <leaflet geojson="geojson" width="100%" height="629px" legend="legend"></leaflet>
+                    <leaflet geojson="geojson" width="100%" height="653px" legend="legend"></leaflet>
                   </div>
                 </div>
               </div>

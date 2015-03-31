@@ -8,9 +8,11 @@
  * Factory in the hydrantsDashboardApp.
  */
 angular.module('hydrantsDashboard')
-  .factory('hydrantStats', ['$filter', function ($filter) {
+  .factory('hydrantStats', ['$filter', 'agsFactory', '$localStorage', function ($filter, agsFactory, $localStorage) {
 
     //Private
+    var token = $localStorage.token;
+
     var today = new Date();
         console.log(today.getTime());
         today.setHours(0);
@@ -100,6 +102,47 @@ angular.module('hydrantsDashboard')
 
 
         callback(this.report);
+      },
+
+      getCheckedStats: function (geom){
+        var dirty = (new Date()).getTime();
+        var sql = ['RFDSTATION IS NOT NULL AND CHECKED = "Y" AND OWNEDBY = 1', 'RFDSTATION IS NOT NULL AND CHECKED = "Y" AND OWNEDBY <> 1' ];
+        var options = {
+          layer: 'Fire Hydrants',
+          geojson: false,
+          actions: 'query',
+          headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+          params: {
+            token: token,
+            f: 'json',
+            where: "RFDSTATION IS NOT NULL AND CHECKED = 'Y' AND " + dirty + " = " + dirty,
+            returnGeometry: false,
+            geometryType: 'esriGeometryPolygon',
+            // inSR: 4326,
+            // outSR: 4326,
+            spatialRel: 'esriSpatialRelContains',
+            geometry: geom,
+            outStatistics: [
+              {
+                "statisticType": "count",
+                "onStatisticField": "CHECKED",
+                "outStatisticFieldName": "count"
+              }
+            ],
+            groupByFieldsForStatistics: 'OWNEDBY'
+          }
+        };
+
+        // sql.forEach(function(query){
+
+          //Set where parameter
+          // options.params.where = query;
+
+          //return promise
+          return agsFactory.publicUtilFS.request(options);
+
+        // });
+
       }
 
 

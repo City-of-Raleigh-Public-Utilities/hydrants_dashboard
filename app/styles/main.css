@@ -36,6 +36,12 @@ body {
   line-height: 40px;
   padding-bottom: 19px;
 }
+.top-row{
+  height: 100%;
+}
+.top-panel{
+  height: 800px;
+}
 
 /* Custom page footer */
 .footer {
@@ -67,7 +73,7 @@ body {
 }
 
 table {
-  font-size: 12px;
+  font-size: 11px;
 }
 
 /* Responsive: Portrait tablets and up */
@@ -94,13 +100,16 @@ table {
 }
 
 .totalsReport{
-  margin: 15px 5px;
+  margin: 2px 5px;
+}
+
+.panel-body{
+  padding:10px;
 }
 
 
-
 .scroll-tbody {
-  max-height: 610px;
+  max-height: 653px;
   max-width: 100%;
   display: block;
   overflow-y: auto;
@@ -135,6 +144,10 @@ table {
 .table-headings {
   background: #337ab7;
   color: #fff;
+}
+
+.report-panel{
+  margin-top: 25px;
 }
 
 .mapNav{

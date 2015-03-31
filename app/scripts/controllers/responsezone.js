@@ -191,6 +191,9 @@ angular.module('hydrantsDashboard')
           // agsFactory.publicUtilFS.request(options.hydrants)
 
           //start
+          // hydrantStats.getCheckedStats(districts).then(function(res){
+          //   console.log(res);
+          // });
 
           $scope.hydrantPromise = agsFactory.publicUtilFS.request(options.hydrants);
 

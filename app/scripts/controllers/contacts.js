@@ -9,9 +9,5 @@
  */
 angular.module('hydrantsDashboard')
   .controller('ContactsCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  
   });
