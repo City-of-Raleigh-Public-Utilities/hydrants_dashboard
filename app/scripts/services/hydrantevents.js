@@ -18,7 +18,7 @@ angular.module('hydrantsDashboard')
           style: function (feature){
             switch (feature.properties.CHECKED) {
               case 'N': return {
-                fillColor: '#0008ff',
+                fillColor: '#ff0000',
                 color: '#000',
                 weight: 1,
                 opacity: 1,
@@ -26,7 +26,7 @@ angular.module('hydrantsDashboard')
                 radius: 4
               };
               case 'Y': return {
-                  fillColor: '#ff0000',
+                  fillColor: '#0008ff',
                   color: '#000',
                   weight: 1,
                   opacity: 1,
@@ -73,7 +73,7 @@ angular.module('hydrantsDashboard')
           name: 'Operable',
           style:function (feature){
             switch (feature.properties.OPERABLE) {
-              case 'N': return {
+              case 'Y': return {
                 fillColor: '#0008ff',
                 color: '#000',
                 weight: 1,
@@ -81,7 +81,7 @@ angular.module('hydrantsDashboard')
                 fillOpacity: 0.8,
                 radius: 4
               };
-              case 'Y': return {
+              case 'N': return {
                 fillColor: '#ff0000',
                 color: '#000',
                   weight: 1,

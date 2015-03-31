@@ -32,9 +32,22 @@
 
 <table ng-show="view" class="totalsReport table table-hover">
   <tbody class="scroll-tbody">
-    <tr id="table-features" ng-repeat="(key, value) in data">
+    <tr id="table-features" ng-repeat="(key, value) in data" ng-switch="key">
       <td>{{key}}</td>
-      <td id="table-values">{{value}}</td>
+      <td ng-switch-when="OWNEDBY" id="table-values" ng-if="value === 0">City of Raleigh</td>
+      <td ng-switch-when="OWNEDBY" id="table-values" ng-if="value === 1">Private</td>
+      <td ng-switch-when="OWNEDBY" id="table-values" ng-if="value === 2">Private</td>
+      <td ng-switch-when="EDITEDON" id="table-values">{{value | date : short}}</td>
+      <td ng-switch-when="CREATEDON" id="table-values">{{value | date : short}}</td>
+      <td ng-switch-when="OPERABLE" id="table-values" ng-if="value === 'Y'">Yes</td>
+      <td ng-switch-when="OPERABLE" id="table-values" ng-if="value === 'No'">No</td>
+      <td ng-switch-when="CHECKED" id="table-values" ng-if="value === 'Y'">Yes</td>
+      <td ng-switch-when="CHECKED" id="table-values" ng-if="value === 'N'">No</td>
+      <td ng-switch-when="REPAIRNEED" id="table-values" ng-if="value">True</td>
+      <td ng-switch-when="REPAIRNEED" id="table-values" ng-if="!value">False</td>
+      <td ng-switch-when="FLOWED" id="table-values" ng-if="value">True</td>
+      <td ng-switch-when="FLOWED" id="table-values" ng-if="!value">False</td>
+      <td ng-switch-default id="table-values">{{value}}</td>
     </tr>
   </tbody>
 </table>

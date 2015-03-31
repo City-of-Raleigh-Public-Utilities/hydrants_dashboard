@@ -79,19 +79,19 @@ angular.module('hydrantsDashboard')
           }
 
           //Total Checked
-          prop.CHECKED === 'Y' && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? that.report.total.Checked_Public++ : 0;
+          prop.CHECKED === 'Y' && prop.OWNEDBY === 0 && prop.RFDSTATION !== null ? that.report.total.Checked_Public++ : 0;
           prop.CHECKED === 'Y' && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? that.report.total.Checked_Private++ : 0;
 
           //Total Inoperable
-          prop.OPERABLE === 'N' && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? that.report.total.Inoperable_Public++ : 0;
+          prop.OPERABLE === 'N' && prop.OWNEDBY === 0 && prop.RFDSTATION !== null ? that.report.total.Inoperable_Public++ : 0;
           prop.OPERABLE === 'N' && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? that.report.total.Inoperable_Private++ : 0;
 
           //Total Needs Repair
-          prop.REPAIRNEED === 1 && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? (that.report.total.Need_Repair_Public++, that.report.needsRepairPublic.push({attributes: prop, geom: feature.geometry})) : 0;
+          prop.REPAIRNEED === 1 && prop.OWNEDBY === 0 && prop.RFDSTATION !== null ? (that.report.total.Need_Repair_Public++, that.report.needsRepairPublic.push({attributes: prop, geom: feature.geometry})) : 0;
           prop.REPAIRNEED === 1 && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? (that.report.total.Need_Repair_Private++, that.report.needsRepairPrivate.push({attributes: prop, geom: feature.geometry}))  : 0;
 
           //Total New Hydrants
-          prop.CREATEDON >= startDate.getTime() && prop.OWNEDBY !== 1 && prop.RFDSTATION !== null ? that.report.total.New_Hydrant_Public++ : 0;
+          prop.CREATEDON >= startDate.getTime() && prop.OWNEDBY === 0 && prop.RFDSTATION !== null ? that.report.total.New_Hydrant_Public++ : 0;
           prop.CREATEDON >= startDate.getTime() && prop.OWNEDBY === 1 && prop.RFDSTATION !== null ? that.report.total.New_Hydrant_Private++ : 0;
 
         });
@@ -100,43 +100,7 @@ angular.module('hydrantsDashboard')
 
 
         callback(this.report);
-      },
-
-      addDomains: function (features, callback){
-        features.forEach(function(feature){
-          var prop = feature.properties;
-            for (var key in prop){
-            switch (key){
-              case 'OWNEDBY':
-                if(prop === 0){
-                  prop = 'City of Raleigh';
-                }
-                else if (prop === 1){
-                  prop = 'Private';
-                }
-                else{
-                  prop = 'Other';
-                }
-                break;
-              case 'EDITEDON' || 'CREATEDON':
-                prop = $filter('date')(prop, 'short');
-                break;
-              case 'OPERABLE':
-                prop === 'Y' ? prop = 'Yes' : prop = 'No';
-                break;
-              case 'REPAIRNEED' || 'FLOWED':
-                prop = prop ? 'True' : 'False';
-                break;
-              default:
-
-            }
-            }
-          });
-
-
-        callback(features);
       }
-
 
 
 

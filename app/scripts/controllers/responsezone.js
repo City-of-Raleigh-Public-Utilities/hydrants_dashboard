@@ -215,7 +215,6 @@ angular.module('hydrantsDashboard')
                     pointToLayer: function (feature, latlng) {
                       return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
                       // return L.marker(latlng, {icon: L.icon(icons.public)});
-
                     },
                     style: $scope.mapFilterSelection.style,
                     resetStyleOnMouseout: true
