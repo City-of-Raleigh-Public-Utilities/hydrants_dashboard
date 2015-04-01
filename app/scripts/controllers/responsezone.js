@@ -29,6 +29,9 @@ angular.module('hydrantsDashboard')
 
      $scope.token = $localStorage.token;
 
+     //Feature group to store map bounds
+     var mapBounds =  new L.FeatureGroup();
+
      //Placeholder for hydrant selection
      $scope.selectedHydrant = {};
 
@@ -112,6 +115,7 @@ angular.module('hydrantsDashboard')
         map.setView([feature.geom.coordinates[1], feature.geom.coordinates[0]], 18);
       };
 
+
       //Controls search bar above map
       $scope.searchMap = function(event, textFilter, geojson){
         //Set timeout to return promise
@@ -129,19 +133,33 @@ angular.module('hydrantsDashboard')
                 resetStyleOnMouseout: true
             }
           });
+
+          //Clear current layers from feature group
+          mapBounds.clearLayers();
+          var enveloped = turf.envelope(geojson.data);
+          L.geoJson(enveloped,{
+            onEachFeature: function (feature, layer){
+              mapBounds.addLayer(layer);
+            }
+          })
+
+          //Zoom to searched region
+          map.fitBounds(mapBounds.getBounds());
+
+
         }, 500);
 
       };
 
      });
 
-      var mapBounds =  new L.FeatureGroup();
+
       $scope.serviceAreas;
 
       agsFactory.publicUtilMS.request(options.serviceArea)
       // agsFactory.publicSafteyMS.request(options.serviceArea)
         .then(function(res){
-          console.log(res);
+
 
           $scope.serviceAreas = turf.combine(res);
           // console.log($scope.serviceAreas);
@@ -150,9 +168,9 @@ angular.module('hydrantsDashboard')
 
 
           var simplified = turf.simplify(res.features[0], 0.02, true);
-          console.log(simplified);
+
           var districts = Terraformer.ArcGIS.convert(simplified.geometry);
-          console.log(districts);
+
 
 
           //Empties exisiting feature group
