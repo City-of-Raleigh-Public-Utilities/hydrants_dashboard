@@ -32,6 +32,8 @@ angular.module('hydrantsDashboard')
      //Feature group to store map bounds
      var mapBounds =  new L.FeatureGroup();
 
+     var repairSelections = new L.FeatureGroup();
+
      //Placeholder for hydrant selection
      $scope.selectedHydrant = {};
 
@@ -104,6 +106,9 @@ angular.module('hydrantsDashboard')
 
       //Controls hover events on needs repairs table
       $scope.zoomToFeature = function(feature){
+        //Clear last features
+        repairSelections.clearLayers();
+
         if ($scope.selectedHydrant.properties){
           $scope.selectedHydrant.properties = feature.attributes;
         }
@@ -113,7 +118,27 @@ angular.module('hydrantsDashboard')
         }
 
         map.setView([feature.geom.coordinates[1], feature.geom.coordinates[0]], 18);
+
+        //Sets the highlight for selected repair feature
+        var layer  = L.circleMarker([feature.geom.coordinates[1], feature.geom.coordinates[0]]);
+        layer.setStyle({
+          radius: 16,
+          fillColor: '#00ffe6',
+          color: '#000',
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        });
+        repairSelections.addLayer(layer);
+        repairSelections.addTo(map);
+        repairSelections.bringToBack();
       };
+
+      //Clear the last selected feature for the repairs list when user leaves the table
+      $scope.clearFeature = function(){
+        //Clear last features
+        repairSelections.clearLayers();
+      }
 
 
       //Controls search bar above map
@@ -141,7 +166,7 @@ angular.module('hydrantsDashboard')
             onEachFeature: function (feature, layer){
               mapBounds.addLayer(layer);
             }
-          })
+          });
 
           //Zoom to searched region
           map.fitBounds(mapBounds.getBounds());

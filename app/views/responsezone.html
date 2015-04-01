@@ -106,7 +106,7 @@
             </tr>
           </thead>
           <tbody class="repairListScroll">
-            <tr ng-repeat="feature in selected.data | filter:searchText" ng-mouseover="zoomToFeature(feature)">
+            <tr ng-repeat="feature in selected.data | filter:searchText" ng-mouseover="zoomToFeature(feature)" ng-mouseleave="clearFeature()">
               <td>{{feature.attributes.FACILITYID}}</td>
               <td>{{feature.attributes.STNUM}} {{feature.attributes.STNAME}} {{feature.attributes.STTYPE}}</td>
               <td ng-if="feature.attributes.OWNEDBY">Private</td>

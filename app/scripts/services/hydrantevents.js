@@ -120,6 +120,7 @@ angular.module('hydrantsDashboard')
         },
         // Mouse over function, called from the Leaflet Map Events
         hydrantMouseover: function (feature, leafletEvent) {
+          console.log(leafletEvent);
             var layer = leafletEvent.target;
             layer.setStyle({
               radius: 6,
