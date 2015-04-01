@@ -40,6 +40,8 @@ module.exports = function(config) {
       'bower_components/angular-busy/dist/angular-busy.js',
       'bower_components/ng-csv/build/ng-csv.min.js',
       'bower_components/ngstorage/ngStorage.js',
+      'bower_components/leaflet.zoomhome/dist/leaflet.zoomhome.js',
+      'bower_components/leaflet.zoomhome/dist/leaflet.zoomhome.min.js',
       // endbower
       'app/scripts/**/*.js',
       'test/mock/**/*.js',

@@ -27,6 +27,12 @@ angular.module('hydrantsDashboard')
        }
      });
 
+     angular.extend($scope, {
+       defaults: {
+           zoomControl: false
+       }
+    });
+
      $scope.token = $localStorage.token;
 
      //Feature group to store map bounds
@@ -96,6 +102,8 @@ angular.module('hydrantsDashboard')
 
     //Map Events
     leafletData.getMap().then(function(map) {
+
+
       $scope.$on('leafletDirectiveMap.geojsonMouseover', function(ev, feature, leafletEvent) {
         $scope.selectedHydrant = hydrantEvents.hydrantMouseover(feature, leafletEvent);
       });
@@ -219,6 +227,10 @@ angular.module('hydrantsDashboard')
           }).addTo(map);
           //Get bounds from geojson and fits to map
           map.fitBounds(mapBounds.getBounds());
+
+          //Adding zoom control needs to happen here so that it adopts the init map bounds for the home button
+          var zoomHome = L.Control.zoomHome();
+              zoomHome.addTo(map);
       });
 
           return districts;
