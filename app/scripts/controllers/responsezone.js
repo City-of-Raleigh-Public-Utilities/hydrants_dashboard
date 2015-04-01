@@ -19,6 +19,8 @@ angular.module('hydrantsDashboard')
 
      agsFactory.isTokenValid($localStorage.expires);
 
+     $scope.token = $localStorage.token;
+
      $scope.responseZone = $routeParams.zone;
 
      FIREDEPTS.forEach(function(dept){
@@ -27,13 +29,43 @@ angular.module('hydrantsDashboard')
        }
      });
 
+     //Base map setup
      angular.extend($scope, {
        defaults: {
            zoomControl: false
-       }
+       },
+
+       layers: {
+         baselayers: {
+           osm: {
+             name: 'OpenStreetMap',
+             url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+             type: 'xyz',
+             layerParams: {},
+             layerOptions: {}
+				   },
+         },
+           overlays: {
+             Hydrants: {
+ 					    name: 'Hydrants',
+ 					    type: 'dynamic',
+ 					    url: 'http://maps.raleighnc.gov/arcgis/rest/services/PublicUtility/FireHydrants/MapServer',
+ 					    visible: true,
+              layerParams: {
+                token: $scope.token
+              },
+ 					    layerOptions: {
+ 					      layers: [0, 1],
+ 				        opacity: 0.5,
+ 				        attribution: 'Copyright:© 2015 City of Raleigh',
+                position: 'back'
+ 					    }
+ 				    },
+           }
+        },
     });
 
-     $scope.token = $localStorage.token;
+
 
      //Feature group to store map bounds
      var mapBounds =  new L.FeatureGroup();

@@ -39,7 +39,8 @@ angular.module('hydrantsDashboard')
             position: 'bottomleft',
             colors: [ '#0008ff', '#ff0000'],
             labels: [ 'Checked', 'Not Checked']
-          }
+          },
+          counts: [0, 0]
         },
         {
           name: 'Repairs',
@@ -120,7 +121,6 @@ angular.module('hydrantsDashboard')
         },
         // Mouse over function, called from the Leaflet Map Events
         hydrantMouseover: function (feature, leafletEvent) {
-          console.log(leafletEvent);
             var layer = leafletEvent.target;
             layer.setStyle({
               radius: 6,
