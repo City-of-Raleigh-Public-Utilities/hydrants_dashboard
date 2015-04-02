@@ -49,13 +49,13 @@ angular.module('hydrantsDashboard')
              Hydrants: {
  					    name: 'Hydrants',
  					    type: 'dynamic',
- 					    url: 'http://maps.raleighnc.gov/arcgis/rest/services/PublicUtility/FireHydrants/MapServer',
+ 					    url: 'http://mapstest.raleighnc.gov/arcgis/rest/services/PublicUtility/HydrantInspection/MapServer',
  					    visible: true,
               layerParams: {
                 token: $scope.token
               },
  					    layerOptions: {
- 					      layers: [0, 1],
+ 					      layers: [1],
  				        opacity: 0.5,
  				        attribution: 'Copyright:© 2015 City of Raleigh',
                 position: 'back'
@@ -104,7 +104,7 @@ angular.module('hydrantsDashboard')
      //Set options for query
      var options = {
        serviceArea: {
-        layer: 'Combined Fire Response',
+        layer: 'RPUD.CombinedFireResponse',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         geojson: true,
         actions: 'query',
@@ -116,7 +116,7 @@ angular.module('hydrantsDashboard')
         }
       },
       hydrants: {
-        layer: 'Fire Hydrants',
+        layer: 'RPUD.wHydrant',
         geojson: true,
         actions: 'query',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},

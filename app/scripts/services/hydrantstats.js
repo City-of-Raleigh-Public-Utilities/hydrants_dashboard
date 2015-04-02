@@ -116,8 +116,6 @@ angular.module('hydrantsDashboard')
             where: "RFDSTATION IS NOT NULL AND CHECKED = 'Y' AND " + dirty + " = " + dirty,
             returnGeometry: false,
             geometryType: 'esriGeometryPolygon',
-            // inSR: 4326,
-            // outSR: 4326,
             spatialRel: 'esriSpatialRelContains',
             geometry: geom,
             outStatistics: [

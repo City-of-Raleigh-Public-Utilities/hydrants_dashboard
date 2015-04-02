@@ -12,6 +12,7 @@ angular.module('hydrantsDashboard')
 
     // Add Server Urls
     var mapsServer = new Ags({'host': 'maps.raleighnc.gov', protocol: 'https'}),
+        testServer = new Ags({'host': 'mapstest.raleighnc.gov', protocol: 'http'}),
 
 
 
@@ -36,7 +37,7 @@ angular.module('hydrantsDashboard')
       services = {
 
           login: function (user, password) {
-            return mapsServer.requestToken(user, password, 60);
+            return testServer.requestToken(user, password, 60);
           },
 
           isTokenValid: function (exp){
@@ -51,20 +52,33 @@ angular.module('hydrantsDashboard')
 
           },
 
+          // //Contain Response Districts
+          // publicUtilMS: testServer.setService({
+          //   folder: 'PublicUtility',
+          //   service: 'FireHydrants',
+          //   server: 'MapServer',
+          // }),
+          //
+          // //Contains Hydrant data
+          // publicUtilFS: testServer.setService({
+          //   folder: 'PublicUtility',
+          //   service: 'FireHydrants',
+          //   server: 'FeatureServer',
+          // }),
+
           //Contain Response Districts
-          publicUtilMS: mapsServer.setService({
+          publicUtilMS: testServer.setService({
             folder: 'PublicUtility',
-            service: 'FireHydrants',
+            service: 'HydrantInspection',
             server: 'MapServer',
           }),
 
           //Contains Hydrant data
-          publicUtilFS: mapsServer.setService({
+          publicUtilFS: testServer.setService({
             folder: 'PublicUtility',
-            service: 'FireHydrants',
+            service: 'HydrantInspection',
             server: 'FeatureServer',
           }),
-
           //Add mapstest for geometry services
           // mapstest: mapstest,
 
