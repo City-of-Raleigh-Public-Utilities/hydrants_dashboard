@@ -14,11 +14,9 @@ angular.module('hydrantsDashboard')
     var token = $localStorage.token;
 
     var today = new Date();
-        console.log(today.getTime());
         today.setHours(0);
         today.setMinutes(0);
         today.setMilliseconds(0);
-        console.log(today);
 
     var startDate = new Date(2015, 4, 1, 0, 0, 0);
     var cleanReport = {
@@ -73,7 +71,7 @@ angular.module('hydrantsDashboard')
         features.forEach(function(feature){
 
           var prop = feature.properties;
-          if (feature.properties.EDITEDON > today){
+          if (feature.properties.EDITEDON > today.getTime()){
             prop.CHECKED === 'Y' ? that.report.daily.Checked++ : 0;
             prop.OPERABLE === 'N' ? that.report.daily.Inoperable++ : 0;
             prop.REPAIRNEED === '1' ? that.report.daily.Need_Repair++ : 0;
