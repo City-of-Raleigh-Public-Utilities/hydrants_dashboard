@@ -41,16 +41,18 @@
                     <form class="form-inline">
                       <div class="form-group">
                         <label for="mapSearch">Search: </label>
-                        <input id="mapSearch" class="mapText" ng-model="searchText" placeholder="type" ng-keyup="searchMap($event, searchText, geojson)"><div cg-busy="searchPromise || hydrantPromise"></div>
+                        <input id="mapSearch" class="mapText" ng-model="searchText" placeholder="type" ng-keyup="searchMap($event, searchText, geojson)"><div cg-busy="{promise:searchPromise ,message:'Searching Hydrants'}"></div>
                       </div>
                       <div class="form-group">
                         <label for="mapSearch">Filter: </label>
-                        <select id="mapFilter" class="mapText" ng-options="mapFilter.name for mapFilter in mapFilterOptions" ng-model="mapFilterSelection" ng-change="updateFilter()"></select>
+                        <select id="mapFilter" class="mapText" ng-options="mapFilter.name for mapFilter in mapFilterOptions" ng-model="mapFilterSelection" ng-change="updateFilter()">
+                          <div cg-busy="{promise:updateFilter(),message:'Filtering Hydrants'}"></div>
+                        </select>
                       </div>
                     </form>
                   </div>
                   <div class="panel-body">
-                    <leaflet defaults="defaults" layers="layers" geojson="geojson" width="100%" height="653px" legend="legend"></leaflet>
+                    <leaflet defaults="defaults" layers="layers" geojson="geojson" width="100%" height="653px" legend="legend"><div cg-busy="{promise:hydrantPromise,message:'Loading Hydrants'}"></div></leaflet>
                   </div>
                 </div>
               </div>

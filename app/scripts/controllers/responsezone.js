@@ -83,18 +83,23 @@ angular.module('hydrantsDashboard')
      $scope.mapFilterSelection = hydrantEvents.filters[0];
 
      $scope.updateFilter = function(){
-       angular.extend($scope, {
-         geojson: {
-             data: $scope.geojson.data,
-             pointToLayer: function (feature, latlng) {
-               return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
-             },
-             style: $scope.mapFilterSelection.style,
-             resetStyleOnMouseout: true
-         },
-         legend: $scope.mapFilterSelection.legend
-     });
+       //Set timeout to return promise to trigger loading
+       $scope.filterPromise = $timeout(function(){
+         angular.extend($scope, {
+           geojson: {
+               data: $scope.geojson.data,
+               pointToLayer: function (feature, latlng) {
+                 return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
+               },
+               style: $scope.mapFilterSelection.style,
+               resetStyleOnMouseout: true
+           },
+           legend: $scope.mapFilterSelection.legend
+       });
+     }, 1000);
    };
+
+
 
      //Set current date
      $interval(function(){
@@ -120,7 +125,7 @@ angular.module('hydrantsDashboard')
         geojson: true,
         actions: 'query',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        timeout: 25000, 
+        timeout: 25000,
         params: {
           token: $scope.token,
           f: 'json',
