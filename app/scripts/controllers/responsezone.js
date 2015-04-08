@@ -120,6 +120,7 @@ angular.module('hydrantsDashboard')
         geojson: true,
         actions: 'query',
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        timeout: 25000, 
         params: {
           token: $scope.token,
           f: 'json',
