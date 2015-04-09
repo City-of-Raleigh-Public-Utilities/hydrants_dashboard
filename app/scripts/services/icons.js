@@ -56,7 +56,7 @@ angular.module('hydrantsDashboard')
           iconSize:     [20, 30]
         },
         orange:{
-          iconUrl: '/images/firehydrants/scaled-at-25/Orange.png',
+          iconUrl: 'images/firehydrants/scaled-at-25/Orange.png',
           iconSize:     [20, 30]
         }
     };
