@@ -118,7 +118,7 @@ angular.module('hydrantsDashboard')
             },
           legend: {
             position: 'bottomleft',
-            colors: [ "url('../images/firehydrants/scaled-at-25/Orange.png'); background-size: 17px 17px;", "url('../images/firehydrants/scaled-at-25/Yellow.png'); background-size: 17px 17px;", "url('../images/firehydrants/scaled-at-25/Red.png'); background-size: 17px 17px;", "url('../images/firehydrants/scaled-at-25/Blue.png'); background-size: 17px 17px;"],
+            colors: [ "url('images/firehydrants/scaled-at-25/Orange.png'); background-size: 17px 17px;", "url('images/firehydrants/scaled-at-25/Yellow.png'); background-size: 17px 17px;", "url('images/firehydrants/scaled-at-25/Red.png'); background-size: 17px 17px;", "url('images/firehydrants/scaled-at-25/Blue.png'); background-size: 17px 17px;"],
             labels: [ 'Checked (Public)', 'Checked (Prvate)', 'Not Checked (Public)', 'Not Checked (Private)']
           },
           setIcons: function (feature, latlng) {
@@ -203,7 +203,7 @@ angular.module('hydrantsDashboard')
             },
             legend: {
               position: 'bottomleft',
-              colors: [ "url('../images/firehydrants/scaled-at-25/Orange.png'); background-size: 17px 17px;", "url('../images/firehydrants/scaled-at-25/Yellow.png'); background-size: 17px 17px;", "url('../images/firehydrants/scaled-at-25/Red.png'); background-size: 17px 17px;", "url('../images/firehydrants/scaled-at-25/Blue.png'); background-size: 17px 17px;"],
+              colors: [ "url('images/firehydrants/scaled-at-25/Orange.png'); background-size: 17px 17px;", "url('images/firehydrants/scaled-at-25/Yellow.png'); background-size: 17px 17px;", "url('images/firehydrants/scaled-at-25/Red.png'); background-size: 17px 17px;", "url('images/firehydrants/scaled-at-25/Blue.png'); background-size: 17px 17px;"],
               labels: [ 'Needs Repair (Public)', 'Needs Repair (Prvate)', 'No Repair Needed (Public)', 'No Repair Needed (Private)']
             },
             setIcons: function (feature, latlng) {
@@ -285,7 +285,7 @@ angular.module('hydrantsDashboard')
             },
             legend: {
               position: 'bottomleft',
-              colors: [ "url('../images/firehydrants/scaled-at-25/Orange.png'); background-size: 17px 17px;", "url('../images/firehydrants/scaled-at-25/Yellow.png'); background-size: 17px 17px;", "url('../images/firehydrants/scaled-at-25/Red.png'); background-size: 17px 17px;", "url('../images/firehydrants/scaled-at-25/Blue.png'); background-size: 17px 17px;"],
+              colors: [ "url('images/firehydrants/scaled-at-25/Orange.png'); background-size: 17px 17px;", "url('images/firehydrants/scaled-at-25/Yellow.png'); background-size: 17px 17px;", "url('images/firehydrants/scaled-at-25/Red.png'); background-size: 17px 17px;", "url('images/firehydrants/scaled-at-25/Blue.png'); background-size: 17px 17px;"],
               labels: [ 'Operable (Public)', 'Operable (Prvate)', 'Not Operable (Public)', 'Not Operable (Private)']
             },
             setIcons: function (feature, latlng) {
