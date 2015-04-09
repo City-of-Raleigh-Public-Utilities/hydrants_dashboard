@@ -42,6 +42,8 @@ module.exports = function(config) {
       'bower_components/ngstorage/ngStorage.js',
       'bower_components/leaflet.zoomhome/dist/leaflet.zoomhome.js',
       'bower_components/leaflet.zoomhome/dist/leaflet.zoomhome.min.js',
+      'bower_components/Chart.js/Chart.js',
+      'bower_components/angular-chart.js/dist/angular-chart.js',
       // endbower
       'app/scripts/**/*.js',
       'test/mock/**/*.js',

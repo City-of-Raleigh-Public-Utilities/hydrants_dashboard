@@ -20,7 +20,8 @@ angular
     'agsserver',
     'leaflet-directive',
     'cgBusy',
-    'ngCsv'
+    'ngCsv',
+    'chart.js'
   ])
   .constant('FIREDEPTS', [
      {

@@ -23,6 +23,7 @@ angular.module('hydrantsDashboard')
 
      $scope.responseZone = $routeParams.zone;
 
+
      FIREDEPTS.forEach(function(dept){
        if (dept.title === $scope.responseZone){
          $scope.badge = dept.icon;
@@ -32,7 +33,8 @@ angular.module('hydrantsDashboard')
      //Base map setup
      angular.extend($scope, {
        defaults: {
-           zoomControl: false
+           zoomControl: false,
+           tileLayer: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
        },
 
        layers: {
@@ -88,13 +90,19 @@ angular.module('hydrantsDashboard')
          angular.extend($scope, {
            geojson: {
                data: $scope.geojson.data,
-               pointToLayer: function (feature, latlng) {
-                 return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
-               },
-               style: $scope.mapFilterSelection.style,
+               pointToLayer: $scope.mapFilterSelection.setIcons,
+              //  function (feature, latlng) {
+              //    return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
+              //  },
+              //  style: $scope.mapFilterSelection.style,
                resetStyleOnMouseout: true
            },
            legend: $scope.mapFilterSelection.legend
+       });
+       hydrantEvents.resetOptions($scope.mapFilterSelection.graphOptions);
+       $scope.mapFilterSelection.getData().then(function(res){
+         console.log(res);
+         $scope.data = res;
        });
      }, 1000);
    };
@@ -222,6 +230,36 @@ angular.module('hydrantsDashboard')
 
       };
 
+
+      $scope.chartlabels = [''] //['Public', 'Private']; //['Download Sales', 'In-Store Sales', 'Mail Sales'];
+      $scope.colours = hydrantEvents.graphOptions.colours; //["#F7464A", "#5AD3D1", "#FFC870", "#8f04f8"];
+      $scope.series = hydrantEvents.graphOptions.chartlabels;
+      $scope.data = [
+        [0],
+        [0],
+        [0],
+        [0]
+        ];
+  // $scope.data = hydrantEvents.graphOptions.data;//[300, 500, 100, 455];
+  $scope.onClick = function (points, evt) {
+    console.log(points, evt);
+  };
+
+//Add chart to map
+    var chartController = L.Control.extend({
+      options: {
+        position: 'topright'
+      },
+
+      onAdd: function (map) {
+          var container = L.DomUtil.get('line');
+          return container;
+      }
+  });
+
+  map.addControl(new chartController());
+
+
      });
 
 
@@ -308,10 +346,10 @@ angular.module('hydrantsDashboard')
               angular.extend($scope, {
                 geojson: {
                     data: res,
-                    pointToLayer: function (feature, latlng) {
-                      return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
+                    pointToLayer: hydrantEvents.setIcons, //function (feature, latlng) {
+                      // return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
                       // return L.marker(latlng, {icon: L.icon(icons.public)});
-                    },
+                    // },
                     style: $scope.mapFilterSelection.style,
                     resetStyleOnMouseout: true
                 },
@@ -338,6 +376,14 @@ angular.module('hydrantsDashboard')
                 $scope.headers = Object.keys($scope.needsRepair[0].data[0].attributes);
               }
 
+
+              //Add chart control
+
+
+              hydrantEvents.getData().then(function(res){
+                console.log(res);
+                $scope.data = res;
+              });
 
               //Prepares data to print
               $scope.printCSV = function(data){
