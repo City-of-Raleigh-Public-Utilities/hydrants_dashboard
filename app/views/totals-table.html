@@ -29,10 +29,16 @@
     <table class="totalsReport table table-hover">
       <tbody class="scroll-tbody">
         <tr id="table-features" ng-repeat="(key, value) in data" ng-switch="key">
-          <td ng-if="key !== 'JURISID' && key !== 'RFD_NOTES' && key !== 'NOTES'">{{key}}</td>
+          <td ng-if="key !== 'JURISID' && key !== 'RFD_NOTES' && key !== 'NOTES' && key !== 'STNAME' && key !== 'STNUM' && key !== 'STENUM' && key !== 'STPREFIX' && key !== 'STSUFFIX' && key !== 'STTYPE'">{{key}}</td>
           <td ng-if="key === 'JURISID'">Tag ID</td>
           <td ng-if="key === 'RFD_NOTES'">Fire Notes</td>
           <td ng-if="key === 'NOTES'">Public Utilities Notes</td>
+          <td ng-if="key === 'STNAME'">Street Name</td>
+          <td ng-if="key === 'STNUM'">Street Number</td>
+          <td ng-if="key === 'STENUM'">Suite Number</td>
+          <td ng-if="key === 'STPREFIX'">Street Prefix</td>
+          <td ng-if="key === 'STSUFFIX'">Street Suffix</td>
+          <td ng-if="key === 'STTYPE'">Street Type</td>
           <td ng-switch-when="OWNEDBY" id="table-values" ng-if="value === 0">City of Raleigh</td>
           <td ng-switch-when="OWNEDBY" id="table-values" ng-if="value === 1">Private</td>
           <td ng-switch-when="OWNEDBY" id="table-values" ng-if="value === 2">Private</td>
