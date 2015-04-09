@@ -8,8 +8,8 @@
  * Controller of the hydrantsDashboardApp
  */
 angular.module('hydrantsDashboard')
-  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval', 'hydrantStats', 'hydrantEvents', '$timeout', '$localStorage', 'icons',
-    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval, hydrantStats, hydrantEvents, $timeout, $localStorage, icons) {
+  .controller('ResponsezoneCtrl', ['$scope', '$route', '$routeParams', '$location', 'FIREDEPTS', 'agsFactory', 'leafletData', '$filter', '$interval', 'hydrantStats', 'hydrantEvents', '$timeout', '$localStorage', 'icons', '$rootScope',
+    function ($scope, $route, $routeParams, $location, FIREDEPTS, agsFactory, leafletData, $filter, $interval, hydrantStats, hydrantEvents, $timeout, $localStorage, icons, $rootScope) {
 
 
     //Get Route Details
@@ -67,7 +67,19 @@ angular.module('hydrantsDashboard')
         },
     });
 
+    //Marker cluster parent group
+    $rootScope.markers = new L.MarkerClusterGroup();
 
+    $rootScope.markers.on('mouseover', function (a) {
+      var f = a.layer.feature.properties,
+          checked = f.CHECKED === 'Y' ? 'Yes' : 'No',
+          repair = f.REPAIRNEED ? 'No' : 'Yes',
+          operable = f.OPERABLE === 'Y' ? 'Yes' : 'No';
+        var marker = a.target;
+        a.layer.bindPopup("<b>Facility ID: " + f.FACILITYID + "</b><br>Checked: "+ checked + "</b><br>Needs Repair: " + repair + "</b><br>Operable: " + operable).openPopup();
+        $scope.selectedHydrant = a.layer.feature;
+        return a.layer.feature;
+    });
 
      //Feature group to store map bounds
      var mapBounds =  new L.FeatureGroup();
@@ -90,16 +102,18 @@ angular.module('hydrantsDashboard')
          angular.extend($scope, {
            geojson: {
                data: $scope.geojson.data,
-               pointToLayer: $scope.mapFilterSelection.setIcons,
-              //  function (feature, latlng) {
-              //    return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
-              //  },
-              //  style: $scope.mapFilterSelection.style,
+              //  pointToLayer: $scope.mapFilterSelection.setIcons,
                resetStyleOnMouseout: true
            },
            legend: $scope.mapFilterSelection.legend
        });
+
+       $rootScope.markers.clearLayers();
        hydrantEvents.resetOptions($scope.mapFilterSelection.graphOptions);
+       
+       $rootScope.markers.addLayer(L.geoJson($scope.geojson.data, {pointToLayer: $scope.mapFilterSelection.setIcons}));
+
+
        $scope.mapFilterSelection.getData().then(function(res){
          console.log(res);
          $scope.data = res;
@@ -148,7 +162,7 @@ angular.module('hydrantsDashboard')
 
     //Map Events
     leafletData.getMap().then(function(map) {
-
+      map.addLayer($rootScope.markers);
 
       $scope.$on('leafletDirectiveMap.geojsonMouseover', function(ev, feature, leafletEvent) {
         $scope.selectedHydrant = hydrantEvents.hydrantMouseover(feature, leafletEvent);
@@ -205,13 +219,13 @@ angular.module('hydrantsDashboard')
           angular.extend($scope, {
             geojson: {
                 data: geojson.data,
-                pointToLayer: function (feature, latlng) {
-                  return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
-                },
-                style: hydrantEvents.setHydrantStyle,
+                // pointToLayer: $scope.mapFilterSelection.setIcons,
+                // style: hydrantEvents.setHydrantStyle,
                 resetStyleOnMouseout: true
             }
           });
+          $rootScope.markers.clearLayers();
+          $rootScope.markers.addLayer(L.geoJson($scope.geojson.data, {pointToLayer: $scope.mapFilterSelection.setIcons}));
 
           //Clear current layers from feature group
           mapBounds.clearLayers();
@@ -346,15 +360,14 @@ angular.module('hydrantsDashboard')
               angular.extend($scope, {
                 geojson: {
                     data: res,
-                    pointToLayer: hydrantEvents.setIcons, //function (feature, latlng) {
-                      // return L.circleMarker(latlng, hydrantEvents.setHydrantStyle);
-                      // return L.marker(latlng, {icon: L.icon(icons.public)});
-                    // },
                     style: $scope.mapFilterSelection.style,
                     resetStyleOnMouseout: true
                 },
                 legend: $scope.mapFilterSelection.legend
             });
+
+            $rootScope.markers.addLayer(L.geoJson($scope.geojson.data, {pointToLayer: hydrantEvents.setIcons}));
+
 
             //Generate map reports
             hydrantStats.getReport(res.features, function(report){

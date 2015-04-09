@@ -60,10 +60,12 @@ angular.module('hydrantsDashboard')
         if(f.OWNEDBY === 0){
           if(f.CHECKED === 'N' && f.RFDSTATION !== null){
             MapEvents.graphOptions.nPublic++;
+
             return L.marker(latlng, {icon: L.icon(icons.red)});
           }
           else if (f.CHECKED === 'Y' && f.RFDSTATION !== null){
             MapEvents.graphOptions.yPublic++;
+
             return L.marker(latlng, {icon: L.icon(icons.orange)});
           }
           else {
@@ -75,10 +77,12 @@ angular.module('hydrantsDashboard')
         else {
           if(f.CHECKED === 'N' && f.RFDSTATION !== null){
             MapEvents.graphOptions.nPrivate++;
+
             return L.marker(latlng, {icon: L.icon(icons.blue)});
           }
           else if (f.CHECKED === 'Y' && f.RFDSTATION !== null){
             MapEvents.graphOptions.yPrivate++;
+
             return L.marker(latlng, {icon: L.icon(icons.yellow)});
           }
           else {
@@ -363,6 +367,8 @@ angular.module('hydrantsDashboard')
             };
           }
         },
+
+
         // Mouse over function, called from the Leaflet Map Events
         hydrantMouseover: function (feature, leafletEvent) {
           var f = feature.properties,
@@ -371,19 +377,17 @@ angular.module('hydrantsDashboard')
               operable = f.OPERABLE === 'Y' ? 'Yes' : 'No';
 
 
-            // var layer = leafletEvent.target;
-            // layer.setStyle({
-            //   radius: 6,
-            //   fillColor: '#00ffe6',
-            //   color: '#000',
-            //   weight: 1,
-            //   opacity: 1,
-            //   fillOpacity: 0.8
-            // });
-            // layer.bringToFront();
+
             var marker = leafletEvent.target;
             marker.bindPopup("<b>Facility ID: " + f.FACILITYID + "</b><br>Checked: "+ checked + "</b><br>Needs Repair: " + repair + "</b><br>Operable: " + operable).openPopup();
             return feature;
+        },
+        onEachFeature: function (feature, layer) {
+          var f = feature.properties,
+              checked = f.CHECKED === 'Y' ? 'Yes' : 'No',
+              repair = f.REPAIRNEED ? 'No' : 'Yes',
+              operable = f.OPERABLE === 'Y' ? 'Yes' : 'No';
+              layer.bindPopup("<b>Facility ID: " + f.FACILITYID + "</b><br>Checked: "+ checked + "</b><br>Needs Repair: " + repair + "</b><br>Operable: " + operable).openPopup();
         },
 
         //Zoom to feature on click
